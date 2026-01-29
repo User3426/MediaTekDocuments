@@ -21,6 +21,16 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgPublics = new BindingSource();
         private readonly BindingSource bdgRayons = new BindingSource();
 
+        // BindingSources pour la modification
+        private readonly BindingSource bdgGenresModif = new BindingSource();
+        private readonly BindingSource bdgPublicsModif = new BindingSource();
+        private readonly BindingSource bdgRayonsModif = new BindingSource();
+
+        /// <summary>
+        /// Booléen pour savoir si une modification est demandée
+        /// </summary>
+        private Boolean enCoursDeModifLivre = false;
+
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
@@ -63,6 +73,12 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+
+            // Combos de modification - avec leurs propres BindingSource
+            RemplirComboCategorie(controller.GetAllGenres(), bdgGenresModif, cbxModifLivreGenre);
+            RemplirComboCategorie(controller.GetAllPublics(), bdgPublicsModif, cbxModifLivrePublic);
+            RemplirComboCategorie(controller.GetAllRayons(), bdgRayonsModif, cbxModifLivreRayon);
+
             RemplirLivresListeComplete();
         }
 
@@ -360,6 +376,169 @@ namespace MediaTekDocuments.view
             }
             RemplirLivresListe(sortedList);
         }
+
+        /// <summary>
+        /// Demande suppression d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSupprLivre_Click(object sender, EventArgs e)
+        {
+            if (dgvLivresListe.SelectedRows.Count > 0)
+            {
+                Livre livre = (Livre)bdgLivresListe.List[bdgLivresListe.Position];
+                if (MessageBox.Show("Voulez-vous vraiment supprimer " + livre.Titre + " ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (controller.DelLivre(livre))
+                    {
+                        lesLivres = controller.GetAllLivres();
+                        RemplirLivresListeComplete();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Suppression impossible, exemplaire ou commande lié au document", "Erreur");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.");
+            }
+        }
+
+        /// <summary>
+        /// Demande la modification d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDemandeModifLivre_Click(object sender, EventArgs e)
+        {
+            if (dgvLivresListe.SelectedRows.Count > 0)
+            {
+                Livre livre = (Livre)bdgLivresListe[bdgLivresListe.Position];
+                EnCoursDeModifLivre(true, livre);
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Modification d'affichage en fonction de si on est en cours
+        /// de modif ou d'ajout de livre
+        /// </summary>
+        /// <param name="modif"></param>
+        private void EnCoursDeModifLivre(bool modif, Livre livre)
+        {
+            enCoursDeModifLivre = modif;
+
+            grpLivresRecherche.Enabled = !modif;
+            txbLivresTitre.ReadOnly = !modif;
+            txbLivresIsbn.ReadOnly = !modif;
+            txbLivresAuteur.ReadOnly = !modif;
+            txbLivresCollection.ReadOnly = !modif;
+            txbLivresImage.ReadOnly = !modif;
+
+            // afficher les combos de modification et boutons
+            txbLivresRayon.Visible = !modif;
+            cbxModifLivreRayon.Visible = modif;
+            txbLivresPublic.Visible = !modif;
+            cbxModifLivrePublic.Visible = modif;
+            txbLivresGenre.Visible = !modif;
+            cbxModifLivreGenre.Visible = modif;
+            btnModifLivreValider.Visible = modif;
+            btnModifLivreValider.Enabled = modif;
+            btnModifLivreAnnuler.Visible = modif;
+            btnModifLivreAnnuler.Enabled = modif;
+
+            // Pré-sélectionner les valeurs actuelles dans les combos
+            cbxModifLivreGenre.SelectedIndex = cbxModifLivreGenre.FindStringExact(livre.Genre);
+            cbxModifLivrePublic.SelectedIndex = cbxModifLivrePublic.FindStringExact(livre.Public);
+            cbxModifLivreRayon.SelectedIndex = cbxModifLivreRayon.FindStringExact(livre.Rayon);
+            if (modif)
+            {
+                
+                grpLivresInfos.Text = "Modifier un Livre";
+                txbLivresTitre.Focus();
+            }
+            else
+            {
+                AfficheLivresInfos(livre);
+                grpLivresInfos.Text = "Informations détaillées";
+            }
+        }
+
+        /// <summary>
+        /// Annule la modification ou l'ajout d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnModifLivreAnnuler_Click(object sender, EventArgs e)
+        {
+            Livre livre = (Livre)bdgLivresListe[bdgLivresListe.Position];
+            EnCoursDeModifLivre(false, livre);
+            AfficheLivresInfos(livre);
+        }
+
+        /// <summary>
+        /// Valide la modification ou l'ajout d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnModifLivreValider_Click(object sender, EventArgs e)
+        {
+            if (!txbLivresTitre.Text.Equals("") && !txbLivresNumero.Text.Equals(""))
+            {
+                // Récupérer les catégories sélectionnées
+                Genre genre = (Genre)bdgGenresModif[bdgGenresModif.Position];
+                Rayon rayon = (Rayon)bdgRayonsModif[bdgRayonsModif.Position];
+                Public publ = (Public)bdgPublicsModif[bdgPublicsModif.Position];
+
+                if (enCoursDeModifLivre)
+                {
+                    Livre ancienLivre = (Livre)bdgLivresListe[bdgLivresListe.Position];
+
+                    // Créer un nouveau livre avec les nouvelles valeurs
+                    Livre livreModifie = new Livre(
+                        ancienLivre.Id,              
+                        txbLivresTitre.Text,        
+                        txbLivresImage.Text,         
+                        txbLivresIsbn.Text,          
+                        txbLivresAuteur.Text,        
+                        txbLivresCollection.Text,
+                        genre.Id,                   
+                        genre.Libelle,               
+                        publ.Id,                     
+                        publ.Libelle,               
+                        rayon.Id,                    
+                        rayon.Libelle                
+                    );
+
+                    if (controller.UpdateLivre(livreModifie))
+                    {
+                        lesLivres = controller.GetAllLivres();
+                        RemplirLivresListeComplete();
+                        EnCoursDeModifLivre(false, livreModifie);
+                        MessageBox.Show("Livre modifié avec succès", "Information");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification", "Erreur");
+                    }
+                }
+                else
+                {
+                    // Mode ajout (à implémenter plus tard)
+                    // ...
+                }
+            }
+            else
+            {
+                MessageBox.Show("Les champs titre et numéro doivent être remplis", "Information");
+            }
+        }
+
         #endregion
 
         #region Onglet Dvd
@@ -1238,6 +1417,9 @@ namespace MediaTekDocuments.view
                 pcbReceptionExemplaireRevueImage.Image = null;
             }
         }
+
         #endregion
+
+        
     }
 }

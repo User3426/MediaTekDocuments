@@ -36,8 +36,12 @@ namespace MediaTekDocuments.dal
         /// </summary>
         private const string POST = "POST";
         /// <summary>
+        /// méthode HTTP pour delete
+        /// </summary>
+        private const string DELETE = "DELETE";
+        /// <summary>
         /// méthode HTTP pour update
-
+        private const string PUT = "PUT";
         /// <summary>
         /// Méthode privée pour créer un singleton
         /// initialise l'accès à l'API
@@ -111,6 +115,26 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Supprime un livre de la bdd
+        /// </summary>
+        /// <param name="livre">livre à supprimer</param>
+        /// <returns></returns>
+        public bool DeleteLivre(Livre livre)
+        {
+            try
+            {
+                String jsonId = convertToJson("id", livre.Id);
+                List<Livre> retour = TraitementRecup<Livre>(DELETE, "livre/" + jsonId, null);
+                return (retour != null);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Retourne toutes les dvd à partir de la BDD
         /// </summary>
         /// <returns>Liste d'objets Dvd</returns>
@@ -164,6 +188,27 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Modifie un livre de la bdd
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns>true si la modification a pu se faire</returns>
+        public bool UpdateLivre(Livre livre)
+        {
+            String jsonLivre = JsonConvert.SerializeObject(livre);
+            try
+            {
+                List<Livre> liste = TraitementRecup<Livre>(PUT, "livre/" + livre.Id, "champs=" + jsonLivre);
+
+                return (liste != null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur UpdateLivre : " + e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -193,6 +238,7 @@ namespace MediaTekDocuments.dal
                 else
                 {
                     Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+                    return null;
                 }
             }catch(Exception e)
             {

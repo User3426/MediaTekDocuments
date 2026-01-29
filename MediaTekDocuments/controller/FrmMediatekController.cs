@@ -96,5 +96,25 @@ namespace MediaTekDocuments.controller
         {
             return access.CreerExemplaire(exemplaire);
         }
+
+        /// <summary>
+        /// supprime un livre dans la bdd
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns></returns>
+        public bool DelLivre(Livre livre)
+        {
+            return access.DeleteLivre(livre);
+        }
+
+        /// <summary>
+        /// Modifie un livre dans la bdd
+        /// </summary>
+        /// <param name="livre">Le livre à modifier</param>
+        /// <returns>true si la modification a réussi</returns>
+        public bool UpdateLivre(Livre livre)
+        {
+            return access.UpdateLivre(livre);
+        }
     }
 }
