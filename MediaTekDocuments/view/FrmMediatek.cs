@@ -27,11 +27,6 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgRayonsModif = new BindingSource();
 
         /// <summary>
-        /// Booléen pour savoir si une modification est demandée
-        /// </summary>
-        private Boolean enCoursDeModifLivre = false;
-
-        /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
         internal FrmMediatek()
@@ -60,6 +55,17 @@ namespace MediaTekDocuments.view
         #region Onglet Livres
         private readonly BindingSource bdgLivresListe = new BindingSource();
         private List<Livre> lesLivres = new List<Livre>();
+        private ModeLivre modeLivreActuel = ModeLivre.Consultation;
+
+        /// <summary>
+        /// Modes d'édition possibles pour un livre
+        /// </summary>
+        private enum ModeLivre
+        {
+            Consultation,
+            Modification,
+            Ajout
+        }
 
         /// <summary>
         /// Ouverture de l'onglet Livres : 
@@ -416,7 +422,7 @@ namespace MediaTekDocuments.view
             if (dgvLivresListe.SelectedRows.Count > 0)
             {
                 Livre livre = (Livre)bdgLivresListe[bdgLivresListe.Position];
-                EnCoursDeModifLivre(true, livre);
+                GererModeLivre(ModeLivre.Modification, livre);
             }
             else
             {
@@ -425,47 +431,64 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Modification d'affichage en fonction de si on est en cours
-        /// de modif ou d'ajout de livre
+        /// Modification d'affichage en fonction du mode (consultation, modification ou ajout)
         /// </summary>
-        /// <param name="modif"></param>
-        private void EnCoursDeModifLivre(bool modif, Livre livre)
+        /// <param name="mode">Le mode d'édition souhaité</param>
+        /// <param name="livre">Le livre concerné (null pour un ajout)</param>
+        private void GererModeLivre(ModeLivre mode, Livre livre)
         {
-            enCoursDeModifLivre = modif;
+            modeLivreActuel = mode;
+            bool enEdition = (mode == ModeLivre.Modification || mode == ModeLivre.Ajout);
 
-            grpLivresRecherche.Enabled = !modif;
-            txbLivresTitre.ReadOnly = !modif;
-            txbLivresIsbn.ReadOnly = !modif;
-            txbLivresAuteur.ReadOnly = !modif;
-            txbLivresCollection.ReadOnly = !modif;
-            txbLivresImage.ReadOnly = !modif;
+            grpLivresRecherche.Enabled = !enEdition;
+            txbLivresTitre.ReadOnly = !enEdition;
+            txbLivresIsbn.ReadOnly = !enEdition;
+            txbLivresAuteur.ReadOnly = !enEdition;
+            txbLivresCollection.ReadOnly = !enEdition;
+            txbLivresImage.ReadOnly = !enEdition;
+            txbLivresRayon.Visible = !enEdition;
+            cbxModifLivreRayon.Visible = enEdition;
+            txbLivresPublic.Visible = !enEdition;
+            cbxModifLivrePublic.Visible = enEdition;
+            txbLivresGenre.Visible = !enEdition;
+            cbxModifLivreGenre.Visible = enEdition;
+            btnModifLivreValider.Visible = enEdition;
+            btnModifLivreValider.Enabled = enEdition;
+            btnModifLivreAnnuler.Visible = enEdition;
+            btnModifLivreAnnuler.Enabled = enEdition;
+            txbLivresNumero.ReadOnly = (mode != ModeLivre.Ajout);
 
-            // afficher les combos de modification et boutons
-            txbLivresRayon.Visible = !modif;
-            cbxModifLivreRayon.Visible = modif;
-            txbLivresPublic.Visible = !modif;
-            cbxModifLivrePublic.Visible = modif;
-            txbLivresGenre.Visible = !modif;
-            cbxModifLivreGenre.Visible = modif;
-            btnModifLivreValider.Visible = modif;
-            btnModifLivreValider.Enabled = modif;
-            btnModifLivreAnnuler.Visible = modif;
-            btnModifLivreAnnuler.Enabled = modif;
-
-            // Pré-sélectionner les valeurs actuelles dans les combos
-            cbxModifLivreGenre.SelectedIndex = cbxModifLivreGenre.FindStringExact(livre.Genre);
-            cbxModifLivrePublic.SelectedIndex = cbxModifLivrePublic.FindStringExact(livre.Public);
-            cbxModifLivreRayon.SelectedIndex = cbxModifLivreRayon.FindStringExact(livre.Rayon);
-            if (modif)
+            switch (mode)
             {
-                
-                grpLivresInfos.Text = "Modifier un Livre";
-                txbLivresTitre.Focus();
-            }
-            else
-            {
-                AfficheLivresInfos(livre);
-                grpLivresInfos.Text = "Informations détaillées";
+                case ModeLivre.Consultation:
+                    grpLivresInfos.Text = "Informations détaillées";
+                    if (livre != null)
+                    {
+                        AfficheLivresInfos(livre);
+                    }
+                    break;
+
+                case ModeLivre.Modification:
+                    grpLivresInfos.Text = "Modifier un Livre";
+                    if (livre != null)
+                    {
+                        AfficheLivresInfos(livre);
+                        cbxModifLivreGenre.SelectedIndex = cbxModifLivreGenre.FindStringExact(livre.Genre);
+                        cbxModifLivrePublic.SelectedIndex = cbxModifLivrePublic.FindStringExact(livre.Public);
+                        cbxModifLivreRayon.SelectedIndex = cbxModifLivreRayon.FindStringExact(livre.Rayon);
+                    }
+                    txbLivresTitre.Focus();
+                    break;
+
+                case ModeLivre.Ajout:
+                    grpLivresInfos.Text = "Ajouter un nouveau Livre";
+                    VideLivresInfos();
+                    // Pré-sélectionner les premiers éléments des combos (ou laisser vide)
+                    cbxModifLivreGenre.SelectedIndex = -1;
+                    cbxModifLivrePublic.SelectedIndex = -1;
+                    cbxModifLivreRayon.SelectedIndex = -1;
+                    txbLivresNumero.Focus();
+                    break;
             }
         }
 
@@ -476,67 +499,119 @@ namespace MediaTekDocuments.view
         /// <param name="e"></param>
         private void btnModifLivreAnnuler_Click(object sender, EventArgs e)
         {
-            Livre livre = (Livre)bdgLivresListe[bdgLivresListe.Position];
-            EnCoursDeModifLivre(false, livre);
-            AfficheLivresInfos(livre);
+            if (modeLivreActuel == ModeLivre.Modification && dgvLivresListe.CurrentCell != null)
+            {
+                Livre livre = (Livre)bdgLivresListe[bdgLivresListe.Position];
+                GererModeLivre(ModeLivre.Consultation, livre);
+            }
+            else
+            {
+                GererModeLivre(ModeLivre.Consultation, null);
+            }
         }
 
         /// <summary>
         /// Valide la modification ou l'ajout d'un livre
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnModifLivreValider_Click(object sender, EventArgs e)
         {
-            if (!txbLivresTitre.Text.Equals("") && !txbLivresNumero.Text.Equals(""))
+            if (string.IsNullOrWhiteSpace(txbLivresTitre.Text))
             {
-                // Récupérer les catégories sélectionnées
-                Genre genre = (Genre)bdgGenresModif[bdgGenresModif.Position];
-                Rayon rayon = (Rayon)bdgRayonsModif[bdgRayonsModif.Position];
-                Public publ = (Public)bdgPublicsModif[bdgPublicsModif.Position];
+                MessageBox.Show("Le titre est obligatoire.", "Information");
+                txbLivresTitre.Focus();
+                return;
+            }
 
-                if (enCoursDeModifLivre)
+            if (string.IsNullOrWhiteSpace(txbLivresNumero.Text))
+            {
+                MessageBox.Show("Le numéro est obligatoire.", "Information");
+                txbLivresNumero.Focus();
+                return;
+            }
+
+            if (cbxModifLivreGenre.SelectedIndex < 0 ||
+                cbxModifLivrePublic.SelectedIndex < 0 ||
+                cbxModifLivreRayon.SelectedIndex < 0)
+            {
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Information");
+                return;
+            }
+
+            Genre genre = (Genre)cbxModifLivreGenre.SelectedItem;
+            Rayon rayon = (Rayon)cbxModifLivreRayon.SelectedItem;
+            Public publ = (Public)cbxModifLivrePublic.SelectedItem;
+
+            if (modeLivreActuel == ModeLivre.Modification)
+            {
+                Livre ancienLivre = (Livre)bdgLivresListe[bdgLivresListe.Position];
+
+                Livre livreModifie = new Livre(
+                    ancienLivre.Id,
+                    txbLivresTitre.Text,
+                    txbLivresImage.Text,
+                    txbLivresIsbn.Text,
+                    txbLivresAuteur.Text,
+                    txbLivresCollection.Text,
+                    genre.Id,
+                    genre.Libelle,
+                    publ.Id,
+                    publ.Libelle,
+                    rayon.Id,
+                    rayon.Libelle
+                );
+
+                if (controller.UpdateLivre(livreModifie))
                 {
-                    Livre ancienLivre = (Livre)bdgLivresListe[bdgLivresListe.Position];
-
-                    // Créer un nouveau livre avec les nouvelles valeurs
-                    Livre livreModifie = new Livre(
-                        ancienLivre.Id,              
-                        txbLivresTitre.Text,        
-                        txbLivresImage.Text,         
-                        txbLivresIsbn.Text,          
-                        txbLivresAuteur.Text,        
-                        txbLivresCollection.Text,
-                        genre.Id,                   
-                        genre.Libelle,               
-                        publ.Id,                     
-                        publ.Libelle,               
-                        rayon.Id,                    
-                        rayon.Libelle                
-                    );
-
-                    if (controller.UpdateLivre(livreModifie))
-                    {
-                        lesLivres = controller.GetAllLivres();
-                        RemplirLivresListeComplete();
-                        EnCoursDeModifLivre(false, livreModifie);
-                        MessageBox.Show("Livre modifié avec succès", "Information");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erreur lors de la modification", "Erreur");
-                    }
+                    lesLivres = controller.GetAllLivres();
+                    RemplirLivresListeComplete();
+                    GererModeLivre(ModeLivre.Consultation, livreModifie);
+                    MessageBox.Show("Livre modifié avec succès.", "Information");
                 }
                 else
                 {
-                    // Mode ajout (à implémenter plus tard)
-                    // ...
+                    MessageBox.Show("Erreur lors de la modification.", "Erreur");
                 }
             }
-            else
+            else if (modeLivreActuel == ModeLivre.Ajout)
             {
-                MessageBox.Show("Les champs titre et numéro doivent être remplis", "Information");
+                if (lesLivres.Any(l => l.Id == txbLivresNumero.Text))
+                {
+                    MessageBox.Show("Ce numéro de livre existe déjà.", "Erreur");
+                    txbLivresNumero.Focus();
+                    return;
+                }
+
+                Livre nouveauLivre = new Livre(
+                    txbLivresNumero.Text,
+                    txbLivresTitre.Text,
+                    txbLivresImage.Text,
+                    txbLivresIsbn.Text,
+                    txbLivresAuteur.Text,
+                    txbLivresCollection.Text,
+                    genre.Id,
+                    genre.Libelle,
+                    publ.Id,
+                    publ.Libelle,
+                    rayon.Id,
+                    rayon.Libelle
+                );
+
+                if (controller.CreerLivre(nouveauLivre))
+                {
+                    lesLivres = controller.GetAllLivres();
+                    RemplirLivresListeComplete();
+                    GererModeLivre(ModeLivre.Consultation, nouveauLivre);
+                    MessageBox.Show("Livre ajouté avec succès.", "Information");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de l'ajout du livre.", "Erreur");
+                }
             }
+        }
+        private void btnAjouterLivre_Click(object sender, EventArgs e)
+        {
+            GererModeLivre(ModeLivre.Ajout, null);
         }
 
         #endregion
@@ -1417,6 +1492,7 @@ namespace MediaTekDocuments.view
                 pcbReceptionExemplaireRevueImage.Image = null;
             }
         }
+
 
         #endregion
 

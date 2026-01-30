@@ -116,5 +116,10 @@ namespace MediaTekDocuments.controller
         {
             return access.UpdateLivre(livre);
         }
+
+        public bool CreerLivre(Livre livre)
+        {
+            return access.CreerLivre(livre);
+        }
     }
 }

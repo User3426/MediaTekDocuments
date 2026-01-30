@@ -208,6 +208,21 @@ namespace MediaTekDocuments.dal
             }
         }
 
+        public bool CreerLivre(Livre livre)
+        {
+            String JsonLivre = JsonConvert.SerializeObject(livre);
+            try
+            {
+                List<Livre> liste = TraitementRecup<Livre>(POST, "livre", "champs=" + JsonLivre);
+                return (liste != null);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
         /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
         /// </summary>

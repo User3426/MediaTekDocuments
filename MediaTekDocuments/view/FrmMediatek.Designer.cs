@@ -32,6 +32,8 @@ namespace MediaTekDocuments.view
             this.tabOngletsApplication = new System.Windows.Forms.TabControl();
             this.tabLivres = new System.Windows.Forms.TabPage();
             this.grpLivresInfos = new System.Windows.Forms.GroupBox();
+            this.btnModifLivreValider = new System.Windows.Forms.Button();
+            this.btnModifLivreAnnuler = new System.Windows.Forms.Button();
             this.cbxModifLivreRayon = new System.Windows.Forms.ComboBox();
             this.cbxModifLivrePublic = new System.Windows.Forms.ComboBox();
             this.cbxModifLivreGenre = new System.Windows.Forms.ComboBox();
@@ -184,8 +186,6 @@ namespace MediaTekDocuments.view
             this.label53 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
-            this.btnModifLivreAnnuler = new System.Windows.Forms.Button();
-            this.btnModifLivreValider = new System.Windows.Forms.Button();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -271,8 +271,33 @@ namespace MediaTekDocuments.view
             this.grpLivresInfos.TabStop = false;
             this.grpLivresInfos.Text = "Informations détaillées";
             // 
+            // btnModifLivreValider
+            // 
+            this.btnModifLivreValider.Enabled = false;
+            this.btnModifLivreValider.Location = new System.Drawing.Point(370, 221);
+            this.btnModifLivreValider.Name = "btnModifLivreValider";
+            this.btnModifLivreValider.Size = new System.Drawing.Size(75, 23);
+            this.btnModifLivreValider.TabIndex = 37;
+            this.btnModifLivreValider.Text = "valider";
+            this.btnModifLivreValider.UseVisualStyleBackColor = true;
+            this.btnModifLivreValider.Visible = false;
+            this.btnModifLivreValider.Click += new System.EventHandler(this.btnModifLivreValider_Click);
+            // 
+            // btnModifLivreAnnuler
+            // 
+            this.btnModifLivreAnnuler.Enabled = false;
+            this.btnModifLivreAnnuler.Location = new System.Drawing.Point(461, 221);
+            this.btnModifLivreAnnuler.Name = "btnModifLivreAnnuler";
+            this.btnModifLivreAnnuler.Size = new System.Drawing.Size(75, 23);
+            this.btnModifLivreAnnuler.TabIndex = 20;
+            this.btnModifLivreAnnuler.Text = "annuler";
+            this.btnModifLivreAnnuler.UseVisualStyleBackColor = true;
+            this.btnModifLivreAnnuler.Visible = false;
+            this.btnModifLivreAnnuler.Click += new System.EventHandler(this.btnModifLivreAnnuler_Click);
+            // 
             // cbxModifLivreRayon
             // 
+            this.cbxModifLivreRayon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxModifLivreRayon.FormattingEnabled = true;
             this.cbxModifLivreRayon.Location = new System.Drawing.Point(150, 171);
             this.cbxModifLivreRayon.Name = "cbxModifLivreRayon";
@@ -282,6 +307,7 @@ namespace MediaTekDocuments.view
             // 
             // cbxModifLivrePublic
             // 
+            this.cbxModifLivrePublic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxModifLivrePublic.FormattingEnabled = true;
             this.cbxModifLivrePublic.Location = new System.Drawing.Point(150, 145);
             this.cbxModifLivrePublic.Name = "cbxModifLivrePublic";
@@ -291,6 +317,7 @@ namespace MediaTekDocuments.view
             // 
             // cbxModifLivreGenre
             // 
+            this.cbxModifLivreGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxModifLivreGenre.FormattingEnabled = true;
             this.cbxModifLivreGenre.Location = new System.Drawing.Point(150, 121);
             this.cbxModifLivreGenre.Name = "cbxModifLivreGenre";
@@ -519,12 +546,13 @@ namespace MediaTekDocuments.view
             // 
             // btnAjouterLivre
             // 
-            this.btnAjouterLivre.Location = new System.Drawing.Point(314, 98);
+            this.btnAjouterLivre.Location = new System.Drawing.Point(220, 356);
             this.btnAjouterLivre.Name = "btnAjouterLivre";
             this.btnAjouterLivre.Size = new System.Drawing.Size(96, 23);
             this.btnAjouterLivre.TabIndex = 18;
             this.btnAjouterLivre.Text = "ajouter nouveau";
             this.btnAjouterLivre.UseVisualStyleBackColor = true;
+            this.btnAjouterLivre.Click += new System.EventHandler(this.btnAjouterLivre_Click);
             // 
             // btnSupprLivre
             // 
@@ -1847,30 +1875,6 @@ namespace MediaTekDocuments.view
             this.btnReceptionRechercher.Text = "Rechercher";
             this.btnReceptionRechercher.UseVisualStyleBackColor = true;
             this.btnReceptionRechercher.Click += new System.EventHandler(this.btnReceptionRechercher_Click);
-            // 
-            // btnModifLivreAnnuler
-            // 
-            this.btnModifLivreAnnuler.Enabled = false;
-            this.btnModifLivreAnnuler.Location = new System.Drawing.Point(461, 221);
-            this.btnModifLivreAnnuler.Name = "btnModifLivreAnnuler";
-            this.btnModifLivreAnnuler.Size = new System.Drawing.Size(75, 23);
-            this.btnModifLivreAnnuler.TabIndex = 20;
-            this.btnModifLivreAnnuler.Text = "annuler";
-            this.btnModifLivreAnnuler.UseVisualStyleBackColor = true;
-            this.btnModifLivreAnnuler.Visible = false;
-            this.btnModifLivreAnnuler.Click += new System.EventHandler(this.btnModifLivreAnnuler_Click);
-            // 
-            // btnModifLivreValider
-            // 
-            this.btnModifLivreValider.Enabled = false;
-            this.btnModifLivreValider.Location = new System.Drawing.Point(370, 221);
-            this.btnModifLivreValider.Name = "btnModifLivreValider";
-            this.btnModifLivreValider.Size = new System.Drawing.Size(75, 23);
-            this.btnModifLivreValider.TabIndex = 37;
-            this.btnModifLivreValider.Text = "valider";
-            this.btnModifLivreValider.UseVisualStyleBackColor = true;
-            this.btnModifLivreValider.Visible = false;
-            this.btnModifLivreValider.Click += new System.EventHandler(this.btnModifLivreValider_Click);
             // 
             // FrmMediatek
             // 
