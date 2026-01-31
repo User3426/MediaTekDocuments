@@ -21,11 +21,6 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgPublics = new BindingSource();
         private readonly BindingSource bdgRayons = new BindingSource();
 
-        // BindingSources pour la modification
-        private readonly BindingSource bdgGenresModif = new BindingSource();
-        private readonly BindingSource bdgPublicsModif = new BindingSource();
-        private readonly BindingSource bdgRayonsModif = new BindingSource();
-
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
@@ -56,6 +51,9 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgLivresListe = new BindingSource();
         private List<Livre> lesLivres = new List<Livre>();
         private ModeLivre modeLivreActuel = ModeLivre.Consultation;
+        private readonly BindingSource bdgGenresModif = new BindingSource();
+        private readonly BindingSource bdgPublicsModif = new BindingSource();
+        private readonly BindingSource bdgRayonsModif = new BindingSource();
 
         /// <summary>
         /// Modes d'édition possibles pour un livre
@@ -929,6 +927,31 @@ namespace MediaTekDocuments.view
             }
             RemplirDvdListe(sortedList);
         }
+
+        private void btnSupprDvd_Click(object sender, EventArgs e)
+        {
+            if (dgvDvdListe.SelectedRows.Count > 0)
+            {
+                Dvd dvd = (Dvd)bdgDvdListe.List[bdgDvdListe.Position];
+                if (MessageBox.Show("Voulez-vous vraiment supprimer " + dvd.Titre + " ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (controller.DelDvd(dvd))
+                    {
+                        lesDvd = controller.GetAllDvd();
+                        RemplirDvdListeComplete();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Suppression impossible, exemplaire ou commande lié au document", "Erreur");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.");
+            }
+        }
+
         #endregion
 
         #region Onglet Revues
@@ -1494,8 +1517,8 @@ namespace MediaTekDocuments.view
         }
 
 
+
         #endregion
 
-        
     }
 }

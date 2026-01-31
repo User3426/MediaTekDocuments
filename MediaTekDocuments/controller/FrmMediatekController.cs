@@ -101,7 +101,7 @@ namespace MediaTekDocuments.controller
         /// supprime un livre dans la bdd
         /// </summary>
         /// <param name="livre"></param>
-        /// <returns></returns>
+        /// <returns>true si la suppression a réussi</returns>
         public bool DelLivre(Livre livre)
         {
             return access.DeleteLivre(livre);
@@ -117,9 +117,24 @@ namespace MediaTekDocuments.controller
             return access.UpdateLivre(livre);
         }
 
+        /// <summary>
+        /// Crée un livre dans la bdd
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns>true si l'ajout a réussi</returns>
         public bool CreerLivre(Livre livre)
         {
             return access.CreerLivre(livre);
+        }
+
+        /// <summary>
+        /// supprime un livre dans la bdd
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
+        public bool DelDvd(Dvd dvd)
+        {
+            return access.DeleteDvd(dvd);
         }
     }
 }

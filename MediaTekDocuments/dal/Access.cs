@@ -135,6 +135,26 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// supprime un dvd de la bdd
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
+        public bool DeleteDvd(Dvd dvd)
+        {
+            try
+            {
+                String jsonId = convertToJson("id", dvd.Id);
+                List<Dvd> retour = TraitementRecup<Dvd>(DELETE, "dvd/" + jsonId, null);
+                return (retour != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Retourne toutes les dvd à partir de la BDD
         /// </summary>
         /// <returns>Liste d'objets Dvd</returns>
