@@ -136,5 +136,10 @@ namespace MediaTekDocuments.controller
         {
             return access.DeleteDvd(dvd);
         }
+
+        public bool UpdateDvd(Dvd dvd)
+        {
+            return access.UpdateDvd(dvd);
+        }
     }
 }

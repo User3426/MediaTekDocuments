@@ -99,6 +99,7 @@ namespace MediaTekDocuments.view
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.grpDvdRecherche = new System.Windows.Forms.GroupBox();
+            this.btnSupprDvd = new System.Windows.Forms.Button();
             this.btnDvdAnnulRayons = new System.Windows.Forms.Button();
             this.btnDvdAnnulPublics = new System.Windows.Forms.Button();
             this.btnDvdNumRecherche = new System.Windows.Forms.Button();
@@ -186,7 +187,12 @@ namespace MediaTekDocuments.view
             this.label53 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
-            this.btnSupprDvd = new System.Windows.Forms.Button();
+            this.cbxModifDvdGenre = new System.Windows.Forms.ComboBox();
+            this.cbxModifDvdPublic = new System.Windows.Forms.ComboBox();
+            this.cbxModifDvdRayon = new System.Windows.Forms.ComboBox();
+            this.btnModifDvd = new System.Windows.Forms.Button();
+            this.btnModifDvdAnnuler = new System.Windows.Forms.Button();
+            this.btnModifDvdValider = new System.Windows.Forms.Button();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -223,7 +229,7 @@ namespace MediaTekDocuments.view
             this.tabOngletsApplication.Location = new System.Drawing.Point(0, 0);
             this.tabOngletsApplication.Name = "tabOngletsApplication";
             this.tabOngletsApplication.SelectedIndex = 0;
-            this.tabOngletsApplication.Size = new System.Drawing.Size(883, 686);
+            this.tabOngletsApplication.Size = new System.Drawing.Size(883, 710);
             this.tabOngletsApplication.TabIndex = 0;
             // 
             // tabLivres
@@ -232,7 +238,7 @@ namespace MediaTekDocuments.view
             this.tabLivres.Controls.Add(this.grpLivresRecherche);
             this.tabLivres.Location = new System.Drawing.Point(4, 22);
             this.tabLivres.Name = "tabLivres";
-            this.tabLivres.Size = new System.Drawing.Size(875, 660);
+            this.tabLivres.Size = new System.Drawing.Size(875, 684);
             this.tabLivres.TabIndex = 2;
             this.tabLivres.Text = "Livres";
             this.tabLivres.UseVisualStyleBackColor = true;
@@ -722,7 +728,7 @@ namespace MediaTekDocuments.view
             this.tabDvd.Controls.Add(this.grpDvdRecherche);
             this.tabDvd.Location = new System.Drawing.Point(4, 22);
             this.tabDvd.Name = "tabDvd";
-            this.tabDvd.Size = new System.Drawing.Size(875, 660);
+            this.tabDvd.Size = new System.Drawing.Size(875, 684);
             this.tabDvd.TabIndex = 3;
             this.tabDvd.Text = "DVD";
             this.tabDvd.UseVisualStyleBackColor = true;
@@ -730,6 +736,11 @@ namespace MediaTekDocuments.view
             // 
             // grpDvdInfos
             // 
+            this.grpDvdInfos.Controls.Add(this.btnModifDvdValider);
+            this.grpDvdInfos.Controls.Add(this.btnModifDvdAnnuler);
+            this.grpDvdInfos.Controls.Add(this.cbxModifDvdRayon);
+            this.grpDvdInfos.Controls.Add(this.cbxModifDvdPublic);
+            this.grpDvdInfos.Controls.Add(this.cbxModifDvdGenre);
             this.grpDvdInfos.Controls.Add(this.label58);
             this.grpDvdInfos.Controls.Add(this.txbDvdDuree);
             this.grpDvdInfos.Controls.Add(this.txbDvdImage);
@@ -752,7 +763,7 @@ namespace MediaTekDocuments.view
             this.grpDvdInfos.Controls.Add(this.label31);
             this.grpDvdInfos.Location = new System.Drawing.Point(8, 408);
             this.grpDvdInfos.Name = "grpDvdInfos";
-            this.grpDvdInfos.Size = new System.Drawing.Size(859, 245);
+            this.grpDvdInfos.Size = new System.Drawing.Size(859, 268);
             this.grpDvdInfos.TabIndex = 21;
             this.grpDvdInfos.TabStop = false;
             this.grpDvdInfos.Text = "Informations détaillées";
@@ -944,6 +955,7 @@ namespace MediaTekDocuments.view
             // 
             // grpDvdRecherche
             // 
+            this.grpDvdRecherche.Controls.Add(this.btnModifDvd);
             this.grpDvdRecherche.Controls.Add(this.btnSupprDvd);
             this.grpDvdRecherche.Controls.Add(this.btnDvdAnnulRayons);
             this.grpDvdRecherche.Controls.Add(this.btnDvdAnnulPublics);
@@ -966,6 +978,16 @@ namespace MediaTekDocuments.view
             this.grpDvdRecherche.TabIndex = 20;
             this.grpDvdRecherche.TabStop = false;
             this.grpDvdRecherche.Text = "Recherches";
+            // 
+            // btnSupprDvd
+            // 
+            this.btnSupprDvd.Location = new System.Drawing.Point(21, 356);
+            this.btnSupprDvd.Name = "btnSupprDvd";
+            this.btnSupprDvd.Size = new System.Drawing.Size(75, 23);
+            this.btnSupprDvd.TabIndex = 17;
+            this.btnSupprDvd.Text = "supprimer";
+            this.btnSupprDvd.UseVisualStyleBackColor = true;
+            this.btnSupprDvd.Click += new System.EventHandler(this.btnSupprDvd_Click);
             // 
             // btnDvdAnnulRayons
             // 
@@ -1125,7 +1147,7 @@ namespace MediaTekDocuments.view
             this.tabRevues.Location = new System.Drawing.Point(4, 22);
             this.tabRevues.Name = "tabRevues";
             this.tabRevues.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRevues.Size = new System.Drawing.Size(875, 670);
+            this.tabRevues.Size = new System.Drawing.Size(875, 660);
             this.tabRevues.TabIndex = 1;
             this.tabRevues.Text = "Revues";
             this.tabRevues.UseVisualStyleBackColor = true;
@@ -1503,7 +1525,7 @@ namespace MediaTekDocuments.view
             this.tabReceptionRevue.Controls.Add(this.grpReceptionRevue);
             this.tabReceptionRevue.Location = new System.Drawing.Point(4, 22);
             this.tabReceptionRevue.Name = "tabReceptionRevue";
-            this.tabReceptionRevue.Size = new System.Drawing.Size(875, 670);
+            this.tabReceptionRevue.Size = new System.Drawing.Size(875, 660);
             this.tabReceptionRevue.TabIndex = 4;
             this.tabReceptionRevue.Text = "Parutions des revues";
             this.tabReceptionRevue.UseVisualStyleBackColor = true;
@@ -1878,21 +1900,75 @@ namespace MediaTekDocuments.view
             this.btnReceptionRechercher.UseVisualStyleBackColor = true;
             this.btnReceptionRechercher.Click += new System.EventHandler(this.btnReceptionRechercher_Click);
             // 
-            // btnSupprDvd
+            // cbxModifDvdGenre
             // 
-            this.btnSupprDvd.Location = new System.Drawing.Point(48, 356);
-            this.btnSupprDvd.Name = "btnSupprDvd";
-            this.btnSupprDvd.Size = new System.Drawing.Size(75, 23);
-            this.btnSupprDvd.TabIndex = 17;
-            this.btnSupprDvd.Text = "supprimer";
-            this.btnSupprDvd.UseVisualStyleBackColor = true;
-            this.btnSupprDvd.Click += new System.EventHandler(this.btnSupprDvd_Click);
+            this.cbxModifDvdGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxModifDvdGenre.FormattingEnabled = true;
+            this.cbxModifDvdGenre.Location = new System.Drawing.Point(150, 140);
+            this.cbxModifDvdGenre.Name = "cbxModifDvdGenre";
+            this.cbxModifDvdGenre.Size = new System.Drawing.Size(207, 21);
+            this.cbxModifDvdGenre.TabIndex = 34;
+            this.cbxModifDvdGenre.Visible = false;
+            // 
+            // cbxModifDvdPublic
+            // 
+            this.cbxModifDvdPublic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxModifDvdPublic.FormattingEnabled = true;
+            this.cbxModifDvdPublic.Location = new System.Drawing.Point(150, 164);
+            this.cbxModifDvdPublic.Name = "cbxModifDvdPublic";
+            this.cbxModifDvdPublic.Size = new System.Drawing.Size(207, 21);
+            this.cbxModifDvdPublic.TabIndex = 35;
+            this.cbxModifDvdPublic.Visible = false;
+            // 
+            // cbxModifDvdRayon
+            // 
+            this.cbxModifDvdRayon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxModifDvdRayon.FormattingEnabled = true;
+            this.cbxModifDvdRayon.Location = new System.Drawing.Point(150, 189);
+            this.cbxModifDvdRayon.Name = "cbxModifDvdRayon";
+            this.cbxModifDvdRayon.Size = new System.Drawing.Size(207, 21);
+            this.cbxModifDvdRayon.TabIndex = 36;
+            this.cbxModifDvdRayon.Visible = false;
+            // 
+            // btnModifDvd
+            // 
+            this.btnModifDvd.Location = new System.Drawing.Point(117, 356);
+            this.btnModifDvd.Name = "btnModifDvd";
+            this.btnModifDvd.Size = new System.Drawing.Size(75, 23);
+            this.btnModifDvd.TabIndex = 18;
+            this.btnModifDvd.Text = "modifier";
+            this.btnModifDvd.UseVisualStyleBackColor = true;
+            this.btnModifDvd.Click += new System.EventHandler(this.btnModifDvd_Click);
+            // 
+            // btnModifDvdAnnuler
+            // 
+            this.btnModifDvdAnnuler.Enabled = false;
+            this.btnModifDvdAnnuler.Location = new System.Drawing.Point(466, 241);
+            this.btnModifDvdAnnuler.Name = "btnModifDvdAnnuler";
+            this.btnModifDvdAnnuler.Size = new System.Drawing.Size(75, 23);
+            this.btnModifDvdAnnuler.TabIndex = 37;
+            this.btnModifDvdAnnuler.Text = "annuler";
+            this.btnModifDvdAnnuler.UseVisualStyleBackColor = true;
+            this.btnModifDvdAnnuler.Visible = false;
+            this.btnModifDvdAnnuler.Click += new System.EventHandler(this.btnModifDvdAnnuler_Click);
+            // 
+            // btnModifDvdValider
+            // 
+            this.btnModifDvdValider.Enabled = false;
+            this.btnModifDvdValider.Location = new System.Drawing.Point(374, 241);
+            this.btnModifDvdValider.Name = "btnModifDvdValider";
+            this.btnModifDvdValider.Size = new System.Drawing.Size(75, 23);
+            this.btnModifDvdValider.TabIndex = 38;
+            this.btnModifDvdValider.Text = "valider";
+            this.btnModifDvdValider.UseVisualStyleBackColor = true;
+            this.btnModifDvdValider.Visible = false;
+            this.btnModifDvdValider.Click += new System.EventHandler(this.btnModifDvdValider_Click);
             // 
             // FrmMediatek
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 686);
+            this.ClientSize = new System.Drawing.Size(883, 710);
             this.Controls.Add(this.tabOngletsApplication);
             this.Name = "FrmMediatek";
             this.Text = "Gestion des documents de la médiathèque";
@@ -2091,6 +2167,12 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnModifLivreAnnuler;
         private System.Windows.Forms.Button btnModifLivreValider;
         private System.Windows.Forms.Button btnSupprDvd;
+        private System.Windows.Forms.ComboBox cbxModifDvdRayon;
+        private System.Windows.Forms.ComboBox cbxModifDvdPublic;
+        private System.Windows.Forms.ComboBox cbxModifDvdGenre;
+        private System.Windows.Forms.Button btnModifDvd;
+        private System.Windows.Forms.Button btnModifDvdValider;
+        private System.Windows.Forms.Button btnModifDvdAnnuler;
     }
 }
 

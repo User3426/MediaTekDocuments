@@ -228,6 +228,27 @@ namespace MediaTekDocuments.dal
             }
         }
 
+        /// <summary>
+        /// Modifie un livre de la bdd
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns>true si la modification a pu se faire</returns>
+        public bool UpdateDvd(Dvd dvd)
+        {
+            String jsonDvd = JsonConvert.SerializeObject(dvd);
+            try
+            {
+                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "dvd/" + dvd.Id, "champs=" + jsonDvd);
+
+                return (liste != null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur UpdateLivre : " + e.Message);
+                return false;
+            }
+        }
+
         public bool CreerLivre(Livre livre)
         {
             String JsonLivre = JsonConvert.SerializeObject(livre);
