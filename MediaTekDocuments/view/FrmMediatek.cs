@@ -1480,6 +1480,30 @@ namespace MediaTekDocuments.view
             }
             RemplirRevuesListe(sortedList);
         }
+
+        private void btnSupprRevue_Click(object sender, EventArgs e)
+        {
+            if (dgvRevuesListe.SelectedRows.Count > 0)
+            {
+                Revue revue = (Revue)bdgRevuesListe.List[bdgRevuesListe.Position];
+                if (MessageBox.Show("Voulez-vous vraiment supprimer " + revue.Titre + " ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (controller.DelRevue(revue))
+                    {
+                        lesRevues = controller.GetAllRevues();
+                        RemplirRevuesListeComplete();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Suppression impossible, exemplaire lié à la revue", "Erreur");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.");
+            }
+        }
         #endregion
 
         #region Onglet Paarutions

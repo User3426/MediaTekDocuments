@@ -155,6 +155,21 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        public bool DelRevue(Revue revue)
+        {
+            try
+            {
+                String jsonId = convertToJson("id", revue.Id);
+                List<Revue> retour = TraitementRecup<Revue>(DELETE, "revue/" + jsonId, null);
+                return (retour != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
         /// <summary>
         /// Retourne toutes les dvd à partir de la BDD
         /// </summary>
@@ -270,7 +285,7 @@ namespace MediaTekDocuments.dal
             }
             return false;
         }
-
+        
         /// <summary>
         /// Crée un Dvd dans la bdd
         /// </summary>
