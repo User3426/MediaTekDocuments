@@ -141,5 +141,10 @@ namespace MediaTekDocuments.controller
         {
             return access.UpdateDvd(dvd);
         }
+
+        public bool CreerDvd(Dvd dvd)
+        {
+            return access.CreerDvd(dvd);
+        }
     }
 }

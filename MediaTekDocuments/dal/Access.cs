@@ -7,6 +7,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace MediaTekDocuments.dal
 {
@@ -238,6 +239,7 @@ namespace MediaTekDocuments.dal
             String jsonDvd = JsonConvert.SerializeObject(dvd);
             try
             {
+                MessageBox.Show(jsonDvd, "JSON envoyé");
                 List<Dvd> liste = TraitementRecup<Dvd>(PUT, "dvd/" + dvd.Id, "champs=" + jsonDvd);
 
                 return (liste != null);
@@ -249,12 +251,37 @@ namespace MediaTekDocuments.dal
             }
         }
 
+        /// <summary>
+        /// Crée un livre dans la bdd
+        /// </summary>
+        /// <param name="livre">le livre à ajouter</param>
+        /// <returns>true si l'ajout a pu se faire</returns>
         public bool CreerLivre(Livre livre)
         {
             String JsonLivre = JsonConvert.SerializeObject(livre);
             try
             {
                 List<Livre> liste = TraitementRecup<Livre>(POST, "livre", "champs=" + JsonLivre);
+                return (liste != null);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Crée un Dvd dans la bdd
+        /// </summary>
+        /// <param name="dvd">le dvd à ajouter</param>
+        /// <returns>true si l'ajout à pu se faire</returns>
+        public bool CreerDvd(Dvd dvd)
+        {
+            String JsonDvd = JsonConvert.SerializeObject(dvd);
+            try
+            {
+                List<Dvd> liste = TraitementRecup<Dvd>(POST, "dvd", "champs=" + JsonDvd);
                 return (liste != null);
             }
             catch(Exception ex)

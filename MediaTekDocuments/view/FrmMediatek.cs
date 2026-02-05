@@ -1059,6 +1059,114 @@ namespace MediaTekDocuments.view
             }
         }
 
+        private void btnModifDvdValider_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txbDvdTitre.Text))
+            {
+                MessageBox.Show("Le titre est obligatoire.", "Information");
+                txbDvdTitre.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txbDvdNumero.Text))
+            {
+                MessageBox.Show("Le numéro est obligatoire.", "Information");
+                txbDvdNumero.Focus();
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txbDvdDuree.Text))
+            {
+                MessageBox.Show("La durée est obligatoire.", "Information");
+                txbDvdDuree.Focus();
+                return;
+            }
+
+            if (cbxModifDvdGenre.SelectedIndex < 0 ||
+                cbxModifDvdPublic.SelectedIndex < 0 ||
+                cbxModifDvdRayon.SelectedIndex < 0)
+            {
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Information");
+                return;
+            }
+
+            Genre genre = (Genre)cbxModifDvdGenre.SelectedItem;
+            Rayon rayon = (Rayon)cbxModifDvdRayon.SelectedItem;
+            Public publ = (Public)cbxModifDvdPublic.SelectedItem;
+
+            if (modeDvdActuel == ModeDvd.Modification)
+            {
+                Dvd ancienDvd = (Dvd)bdgDvdListe[bdgDvdListe.Position];
+
+                Dvd dvdModifie = new Dvd(
+                    ancienDvd.Id,
+                    txbDvdTitre.Text,
+                    txbDvdImage.Text,
+                    int.Parse(txbDvdDuree.Text),
+                    txbDvdRealisateur.Text,
+                    txbDvdSynopsis.Text,
+                    genre.Id,
+                    genre.Libelle,
+                    publ.Id,
+                    publ.Libelle,
+                    rayon.Id,
+                    rayon.Libelle
+                );
+
+                if (controller.UpdateDvd(dvdModifie))
+                {
+                    lesDvd = controller.GetAllDvd();
+                    RemplirDvdListeComplete();
+                    GererModeDvd(ModeDvd.Consultation, dvdModifie);
+                    MessageBox.Show("DVD modifié avec succès.", "Information");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la modification.", "Erreur");
+                }
+            }
+            else if (modeDvdActuel == ModeDvd.Ajout)
+            {
+                if (lesDvd.Any(d => d.Id == txbDvdNumero.Text))
+                {
+                    MessageBox.Show("Ce numéro de DVD existe déjà.", "Erreur");
+                    txbDvdNumero.Focus();
+                    return;
+                }
+
+                Dvd nouveauDvd = new Dvd(
+                    txbDvdNumero.Text,
+                    txbDvdTitre.Text,
+                    txbDvdImage.Text,
+                    int.Parse(txbDvdDuree.Text),
+                    txbDvdRealisateur.Text,
+                    txbDvdSynopsis.Text,
+                    genre.Id,
+                    genre.Libelle,
+                    publ.Id,
+                    publ.Libelle,
+                    rayon.Id,
+                    rayon.Libelle
+                );
+
+                if (controller.CreerDvd(nouveauDvd))
+                {
+                    lesDvd = controller.GetAllDvd();
+                    RemplirDvdListeComplete();
+                    GererModeDvd(ModeDvd.Consultation, nouveauDvd);
+                    MessageBox.Show("DVD ajouté avec succès.", "Information");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de l'ajout du DVD.", "Erreur");
+                }
+            }
+        }
+
+        private void btnAjouterDvd_Click(object sender, EventArgs e)
+        {
+            GererModeDvd(ModeDvd.Ajout, null);
+        }
+
 
         #endregion
 
@@ -1626,103 +1734,8 @@ namespace MediaTekDocuments.view
 
 
 
+
         #endregion
 
-        private void btnModifDvdValider_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txbDvdTitre.Text))
-            {
-                MessageBox.Show("Le titre est obligatoire.", "Information");
-                txbDvdTitre.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txbDvdNumero.Text))
-            {
-                MessageBox.Show("Le numéro est obligatoire.", "Information");
-                txbDvdNumero.Focus();
-                return;
-            }
-
-            if (cbxModifDvdGenre.SelectedIndex < 0 ||
-                cbxModifDvdPublic.SelectedIndex < 0 ||
-                cbxModifDvdRayon.SelectedIndex < 0)
-            {
-                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Information");
-                return;
-            }
-
-            Genre genre = (Genre)cbxModifDvdGenre.SelectedItem;
-            Rayon rayon = (Rayon)cbxModifDvdRayon.SelectedItem;
-            Public publ = (Public)cbxModifDvdPublic.SelectedItem;
-
-            if (modeDvdActuel == ModeDvd.Modification)
-            {
-                Dvd ancienDvd = (Dvd)bdgDvdListe[bdgDvdListe.Position];
-
-                Dvd dvdModifie = new Dvd(
-                    ancienDvd.Id,
-                    txbDvdTitre.Text,
-                    txbDvdImage.Text,
-                    int.Parse(txbDvdDuree.Text),        
-                    txbDvdRealisateur.Text,  
-                    txbDvdSynopsis.Text,     
-                    genre.Id,
-                    genre.Libelle,
-                    publ.Id,
-                    publ.Libelle,
-                    rayon.Id,
-                    rayon.Libelle
-                );
-
-                if (controller.UpdateDvd(dvdModifie))
-                {
-                    lesDvd = controller.GetAllDvd();
-                    RemplirDvdListeComplete();
-                    GererModeDvd(ModeDvd.Consultation, dvdModifie);
-                    MessageBox.Show("DVD modifié avec succès.", "Information");
-                }
-                else
-                {
-                    MessageBox.Show("Erreur lors de la modification.", "Erreur");
-                }
-            }
-            else if (modeDvdActuel == ModeDvd.Ajout)
-            {
-                if (lesDvd.Any(d => d.Id == txbDvdNumero.Text))
-                {
-                    MessageBox.Show("Ce numéro de DVD existe déjà.", "Erreur");
-                    txbDvdNumero.Focus();
-                    return;
-                }
-
-                Dvd nouveauDvd = new Dvd(
-                    txbDvdNumero.Text,
-                    txbDvdTitre.Text,
-                    txbDvdImage.Text,
-                    txbDvdDuree.Text,        
-                    txbDvdRealisateur.Text,  
-                    txbDvdSynopsis.Text,     
-                    genre.Id,
-                    genre.Libelle,
-                    publ.Id,
-                    publ.Libelle,
-                    rayon.Id,
-                    rayon.Libelle
-                );
-
-                if (controller.CreerDvd(nouveauDvd))
-                {
-                    lesDvd = controller.GetAllDvd();
-                    RemplirDvdListeComplete();
-                    GererModeDvd(ModeDvd.Consultation, nouveauDvd);
-                    MessageBox.Show("DVD ajouté avec succès.", "Information");
-                }
-                else
-                {
-                    MessageBox.Show("Erreur lors de l'ajout du DVD.", "Erreur");
-                }
-            }
-        }
     }
 }
