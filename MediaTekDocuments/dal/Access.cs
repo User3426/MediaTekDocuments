@@ -203,6 +203,13 @@ namespace MediaTekDocuments.dal
             return lesExemplaires;
         }
 
+        public List<CommandeDocument> GetCommandeLivre(string idDocument)
+        {
+            String jsonIdDocument = convertToJson("id", idDocument);
+            List<CommandeDocument> lesCommandes = TraitementRecup<CommandeDocument>(GET, "commandedocument/" + jsonIdDocument, null);
+            return lesCommandes;
+        }
+
         /// <summary>
         /// ecriture d'un exemplaire en base de données
         /// </summary>

@@ -78,7 +78,6 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
 
-            // Combos de modification - avec leurs propres BindingSource
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenresModif, cbxModifLivreGenre);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublicsModif, cbxModifLivrePublic);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayonsModif, cbxModifLivreRayon);
@@ -607,6 +606,12 @@ namespace MediaTekDocuments.view
                 }
             }
         }
+        /// <summary>
+        /// Demande l'ajout d'un nouveau livre
+        /// met le formulaire en mode ajout
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAjouterLivre_Click(object sender, EventArgs e)
         {
             GererModeLivre(ModeLivre.Ajout, null);
@@ -1976,6 +1981,32 @@ namespace MediaTekDocuments.view
 
 
 
+
+
+        #endregion
+
+        #region Onglet Paarutions
+        private readonly BindingSource bdgCommandes = new BindingSource();
+        private List<CommandeDocument> lesCommandes = new List<CommandeDocument>();
+
+        private void tabCommandeLivre_Enter(object sender, EventArgs e)
+        {
+            lesLivres = controller.GetAllLivres();
+            txbReceptionRevueNumero.Text = "";
+        }
+
+        private void AfficheCommandesLivre()
+        {
+            string idLivre = txbCommandeLivreNumero.Text;
+            lesCommandes = controller.GetCommandesLivre(idLivre);
+            RemplirCommandesListe(lesCommandes);
+        }
+
+        private void RemplirCommandesListe(List<CommandeDocument> commandes)
+        {
+            bdgCommandes.DataSource = commandes;
+            dgvCommandeLivre.DataSource = bdgCommandes;
+        }
 
 
         #endregion
