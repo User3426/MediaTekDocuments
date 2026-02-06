@@ -267,6 +267,28 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Modifie une revue de la bdd
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns>true si la modification a pu se faire</returns>
+        public bool UpdateRevue(Revue revue)
+        {
+            String jsonRevue = JsonConvert.SerializeObject(revue);
+            try
+            {
+                MessageBox.Show(jsonRevue, "JSON envoyé");
+                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "revue/" + revue.Id, "champs=" + jsonRevue);
+
+                return (liste != null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur UpdateLivre : " + e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Crée un livre dans la bdd
         /// </summary>
         /// <param name="livre">le livre à ajouter</param>
@@ -300,6 +322,21 @@ namespace MediaTekDocuments.dal
                 return (liste != null);
             }
             catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        public bool CreerRevue(Revue revue)
+        {
+            String JsonRevue = JsonConvert.SerializeObject(revue);
+            try
+            {
+                List<Revue> liste = TraitementRecup<Revue>(POST, "revue", "champs=" + JsonRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

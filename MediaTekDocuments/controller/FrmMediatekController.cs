@@ -161,5 +161,15 @@ namespace MediaTekDocuments.controller
         {
             return access.DelRevue(revue);
         }
+
+        public bool CreerRevue(Revue revue)
+        {
+            return access.CreerRevue(revue);
+        }
+
+        public bool UpdateRevue(Revue revue)
+        {
+            return access.UpdateRevue(revue);
+        }
     }
 }

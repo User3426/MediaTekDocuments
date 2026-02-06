@@ -1173,6 +1173,20 @@ namespace MediaTekDocuments.view
         #region Onglet Revues
         private readonly BindingSource bdgRevuesListe = new BindingSource();
         private List<Revue> lesRevues = new List<Revue>();
+        private ModeRevue modeRevueActuel = ModeRevue.Consultation;
+        private readonly BindingSource bdgGenresModifRevue = new BindingSource();
+        private readonly BindingSource bdgPublicsModifRevue = new BindingSource();
+        private readonly BindingSource bdgRayonsModifRevue = new BindingSource();
+
+        /// <summary>
+        /// Modes d'édition possibles pour une revue
+        /// </summary>
+        private enum ModeRevue
+        {
+            Consultation,
+            Modification,
+            Ajout
+        }
 
         /// <summary>
         /// Ouverture de l'onglet Revues : 
@@ -1186,6 +1200,9 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+            RemplirComboCategorie(controller.GetAllGenres(), bdgGenresModifRevue, cbxModifRevueGenre);
+            RemplirComboCategorie(controller.GetAllPublics(), bdgPublicsModifRevue, cbxModifRevuePublic);
+            RemplirComboCategorie(controller.GetAllRayons(), bdgRayonsModifRevue, cbxModifRevueRayon);
             RemplirRevuesListeComplete();
         }
 
@@ -1504,6 +1521,207 @@ namespace MediaTekDocuments.view
                 MessageBox.Show("Une ligne doit être sélectionnée.");
             }
         }
+
+        /// <summary>
+        /// Modification d'affichage en fonction du mode (consultation, modification ou ajout)
+        /// </summary>
+        /// <param name="mode">Le mode d'édition souhaité</param>
+        /// <param name="revue">La revue concernée (null pour un ajout)</param>
+        private void GererModeRevue(ModeRevue mode, Revue revue)
+        {
+            modeRevueActuel = mode;
+            bool enEdition = (mode == ModeRevue.Modification || mode == ModeRevue.Ajout);
+
+            grpRevuesRecherche.Enabled = !enEdition;
+            txbRevuesTitre.ReadOnly = !enEdition;
+            txbRevuesPeriodicite.ReadOnly = !enEdition;
+            txbRevuesDateMiseADispo.ReadOnly = !enEdition;
+            txbRevuesImage.ReadOnly = !enEdition;
+
+            txbRevuesRayon.Visible = !enEdition;
+            cbxModifRevueRayon.Visible = enEdition;
+            txbRevuesPublic.Visible = !enEdition;
+            cbxModifRevuePublic.Visible = enEdition;
+            txbRevuesGenre.Visible = !enEdition;
+            cbxModifRevueGenre.Visible = enEdition;
+
+            btnModifRevueValider.Visible = enEdition;
+            btnModifRevueValider.Enabled = enEdition;
+            btnModifRevueAnnuler.Visible = enEdition;
+            btnModifRevueAnnuler.Enabled = enEdition;
+
+            txbRevuesNumero.ReadOnly = (mode != ModeRevue.Ajout);
+
+            switch (mode)
+            {
+                case ModeRevue.Consultation:
+                    grpRevuesInfos.Text = "Informations détaillées";
+                    if (revue != null)
+                    {
+                        AfficheRevuesInfos(revue);
+                    }
+                    break;
+
+                case ModeRevue.Modification:
+                    grpRevuesInfos.Text = "Modifier une Revue";
+                    if (revue != null)
+                    {
+                        AfficheRevuesInfos(revue);
+                        cbxModifRevueGenre.SelectedIndex = cbxModifRevueGenre.FindStringExact(revue.Genre);
+                        cbxModifRevuePublic.SelectedIndex = cbxModifRevuePublic.FindStringExact(revue.Public);
+                        cbxModifRevueRayon.SelectedIndex = cbxModifRevueRayon.FindStringExact(revue.Rayon);
+                    }
+                    txbRevuesTitre.Focus();
+                    break;
+
+                case ModeRevue.Ajout:
+                    grpRevuesInfos.Text = "Ajouter une nouvelle Revue";
+                    VideRevuesInfos();
+                    cbxModifRevueGenre.SelectedIndex = -1;
+                    cbxModifRevuePublic.SelectedIndex = -1;
+                    cbxModifRevueRayon.SelectedIndex = -1;
+                    txbRevuesNumero.Focus();
+                    break;
+            }
+        }
+
+        private void btnModifRevueAnnuler_Click(object sender, EventArgs e)
+        {
+            if (modeRevueActuel == ModeRevue.Modification && dgvRevuesListe.CurrentCell != null)
+            {
+                Revue revue = (Revue)bdgRevuesListe[bdgRevuesListe.Position];
+                GererModeRevue(ModeRevue.Consultation, revue);
+            }
+            else
+            {
+                GererModeRevue(ModeRevue.Consultation, null);
+            }
+        }
+
+        private void btnAjouterRevue_Click(object sender, EventArgs e)
+        {
+            GererModeRevue(ModeRevue.Ajout, null);
+        }
+
+        private void btnModifRevue_Click(object sender, EventArgs e)
+        {
+            if (dgvRevuesListe.SelectedRows.Count > 0)
+            {
+                Revue revue = (Revue)bdgRevuesListe[bdgRevuesListe.Position];
+                GererModeRevue(ModeRevue.Modification, revue);
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Valide la modification ou l'ajout d'une revue
+        /// </summary>
+        private void btnModifRevueValider_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txbRevuesTitre.Text))
+            {
+                MessageBox.Show("Le titre est obligatoire.", "Information");
+                txbRevuesTitre.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txbRevuesNumero.Text))
+            {
+                MessageBox.Show("Le numéro est obligatoire.", "Information");
+                txbRevuesNumero.Focus();
+                return;
+            }
+
+            if (cbxModifRevueGenre.SelectedIndex < 0 ||
+                cbxModifRevuePublic.SelectedIndex < 0 ||
+                cbxModifRevueRayon.SelectedIndex < 0)
+            {
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Information");
+                return;
+            }
+
+            // Validation du délai de mise à disposition (doit être un nombre)
+            if (!int.TryParse(txbRevuesDateMiseADispo.Text, out int delaiMiseADispo))
+            {
+                MessageBox.Show("Le délai de mise à disposition doit être un nombre.", "Information");
+                txbRevuesDateMiseADispo.Focus();
+                return;
+            }
+
+            Genre genre = (Genre)cbxModifRevueGenre.SelectedItem;
+            Rayon rayon = (Rayon)cbxModifRevueRayon.SelectedItem;
+            Public publ = (Public)cbxModifRevuePublic.SelectedItem;
+
+            if (modeRevueActuel == ModeRevue.Modification)
+            {
+                Revue ancienneRevue = (Revue)bdgRevuesListe[bdgRevuesListe.Position];
+
+                Revue revueModifiee = new Revue(
+                    ancienneRevue.Id,
+                    txbRevuesTitre.Text,
+                    txbRevuesImage.Text,
+                    genre.Id,
+                    genre.Libelle,
+                    publ.Id,
+                    publ.Libelle,
+                    rayon.Id,
+                    rayon.Libelle,
+                    txbRevuesPeriodicite.Text,
+                    delaiMiseADispo
+                );
+
+                if (controller.UpdateRevue(revueModifiee))
+                {
+                    lesRevues = controller.GetAllRevues();
+                    RemplirRevuesListeComplete();
+                    GererModeRevue(ModeRevue.Consultation, revueModifiee);
+                    MessageBox.Show("Revue modifiée avec succès.", "Information");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la modification.", "Erreur");
+                }
+            }
+            else if (modeRevueActuel == ModeRevue.Ajout)
+            {
+                if (lesRevues.Any(r => r.Id == txbRevuesNumero.Text))
+                {
+                    MessageBox.Show("Ce numéro de revue existe déjà.", "Erreur");
+                    txbRevuesNumero.Focus();
+                    return;
+                }
+
+                Revue nouvelleRevue = new Revue(
+                    txbRevuesNumero.Text,
+                    txbRevuesTitre.Text,
+                    txbRevuesImage.Text,
+                    genre.Id,
+                    genre.Libelle,
+                    publ.Id,
+                    publ.Libelle,
+                    rayon.Id,
+                    rayon.Libelle,
+                    txbRevuesPeriodicite.Text,
+                    delaiMiseADispo
+                );
+
+                if (controller.CreerRevue(nouvelleRevue))
+                {
+                    lesRevues = controller.GetAllRevues();
+                    RemplirRevuesListeComplete();
+                    GererModeRevue(ModeRevue.Consultation, nouvelleRevue);
+                    MessageBox.Show("Revue ajoutée avec succès.", "Information");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de l'ajout de la revue.", "Erreur");
+                }
+            }
+        }
+
         #endregion
 
         #region Onglet Paarutions
@@ -1755,6 +1973,7 @@ namespace MediaTekDocuments.view
                 pcbReceptionExemplaireRevueImage.Image = null;
             }
         }
+
 
 
 
