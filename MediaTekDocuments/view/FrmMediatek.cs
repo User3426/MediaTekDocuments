@@ -2142,6 +2142,12 @@ namespace MediaTekDocuments.view
                 MessageBox.Show("Tous les champs sont obligatoires", "Information");
                 return;
             }
+            
+            if (txbCommandeLivreNumero.Text == "")
+            {
+                MessageBox.Show("Un livre doit être sélectionné !", "Informations");
+                return;
+            }
 
             try
             {

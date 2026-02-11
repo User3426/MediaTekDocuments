@@ -357,7 +357,6 @@ namespace MediaTekDocuments.dal
         /// <returns>true si insertion réussie</returns>
         public bool CreerCommandeDocument(CommandeDocument commande)
         {
-            // Créer le JSON pour la commande
             String jsonCommande = JsonConvert.SerializeObject(commande);
 
             try
