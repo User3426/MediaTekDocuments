@@ -1995,6 +1995,9 @@ namespace MediaTekDocuments.view
             txbReceptionRevueNumero.Text = "";
         }
 
+        /// <summary>
+        /// Receptionne et affiche les commandes d'un livre
+        /// </summary>
         private void AfficheCommandesLivre()
         {
             string idLivre = txbCommandeLivreNumero.Text;
@@ -2004,12 +2007,116 @@ namespace MediaTekDocuments.view
 
         private void RemplirCommandesListe(List<CommandeDocument> commandes)
         {
-            bdgCommandes.DataSource = commandes;
-            dgvCommandeLivre.DataSource = bdgCommandes;
+            if (commandes != null)
+            {
+                bdgCommandes.DataSource = commandes;
+                dgvCommandeLivre.DataSource = bdgCommandes;
+                dgvCommandeLivre.Columns["IdLivreDvd"].Visible = false;
+                dgvCommandeLivre.Columns["IdSuivi"].Visible = false;
+                dgvCommandeLivre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                dgvCommandeLivre.Columns["Id"].DisplayIndex = 0;
+                dgvCommandeLivre.Columns["DateCommande"].DisplayIndex = 1;
+                dgvCommandeLivre.Columns["Montant"].DisplayIndex = 2;
+                dgvCommandeLivre.Columns["NbExemplaire"].DisplayIndex = 3;
+                dgvCommandeLivre.Columns["LibelleSuivi"].DisplayIndex = 4;
+            }
+            else
+            {
+                bdgCommandes.DataSource = null;
+            }
+        }
+
+        /// <summary>
+        /// Affichage des informations du livre sélectionné
+        /// </summary>
+        /// <param name="revue">la revue</param>
+        private void AfficheCommandeLivreInfos(Livre livre)
+        {
+            txbCommandeLivreAuteur.Text = livre.Auteur;
+            txbCommandeLivreCollection.Text = livre.Collection;
+            txbCommandeLivreCheminImg.Text = livre.Image;
+            txbCommandeLivreIsbn.Text = livre.Isbn;
+            txbCommandeLivreNumero.Text = livre.Id;
+            txbCommandeLivreGenre.Text = livre.Genre;
+            txbCommandeLivrePublic.Text = livre.Public;
+            txbCommandeLivreRayon.Text = livre.Rayon;
+            txbCommandeLivreTitre.Text = livre.Titre;
+            string image = livre.Image;
+            try
+            {
+                pcbCommandeLivreImage.Image = Image.FromFile(image);
+            }
+            catch
+            {
+                pcbCommandeLivreImage.Image = null;
+            }
+            AfficheCommandesLivre();
+        }
+
+        private void btnCommandeLivreRechercher_Click(object sender, EventArgs e)
+        {
+            if (!txbCommandeLivreNumero.Text.Equals(""))
+            {
+                Livre livre = lesLivres.Find(x => x.Id.Equals(txbCommandeLivreNumero.Text));
+                if (livre != null)
+                {
+                    AfficheCommandeLivreInfos(livre);
+                }
+                else
+                {
+                    MessageBox.Show("numéro introuvable");
+                }
+            }
+        }
+
+        private void txbCommandeLivreNumero_TextChanged(object sender, EventArgs e)
+        {
+            txbCommandeLivreAuteur.Text = "";
+            txbCommandeLivreCollection.Text = "";
+            txbCommandeLivreCheminImg.Text = "";
+            txbCommandeLivreIsbn.Text = "";
+            txbCommandeLivreGenre.Text = "";
+            txbCommandeLivrePublic.Text = "";
+            txbCommandeLivreRayon.Text = "";
+            txbCommandeLivreTitre.Text = "";
+            pcbCommandeLivreImage.Image = null;
+            RemplirCommandesListe(null);
+        }
+
+        /// <summary>
+        /// tri sur une colonne de la liste des commandes d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvCommandeLivre_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string titreColonne = dgvCommandeLivre.Columns[e.ColumnIndex].HeaderText;
+            List<CommandeDocument> sortedList = new List<CommandeDocument>();
+
+            switch (titreColonne)
+            {
+                case "Id":
+                    sortedList = lesCommandes.OrderBy(o => o.Id).ToList();
+                    break;
+                case "DateCommande":
+                    sortedList = lesCommandes.OrderBy(o => o.DateCommande).Reverse().ToList();
+                    break;
+                case "Montant":
+                    sortedList = lesCommandes.OrderBy(o => o.Montant).Reverse().ToList();
+                    break;
+                case "NbExemplaire":
+                    sortedList = lesCommandes.OrderBy(o => o.NbExemplaire).Reverse().ToList();
+                    break;
+                case "LibelleSuivi":
+                    sortedList = lesCommandes.OrderBy(o => o.LibelleSuivi).ToList();
+                    break;
+            }
+
+            RemplirCommandesListe(sortedList);
         }
 
 
-        #endregion
 
+        #endregion
     }
 }
