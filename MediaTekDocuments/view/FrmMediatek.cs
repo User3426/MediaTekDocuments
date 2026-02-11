@@ -1988,6 +1988,7 @@ namespace MediaTekDocuments.view
         #region Onglet Paarutions
         private readonly BindingSource bdgCommandes = new BindingSource();
         private List<CommandeDocument> lesCommandes = new List<CommandeDocument>();
+        const string SUIVIENCOURS = "00001";
 
         private void tabCommandeLivre_Enter(object sender, EventArgs e)
         {
@@ -2027,6 +2028,20 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
+        /// Permet ou interdit l'accès à la saisie d'une nouvelle commande
+        /// et vide les objets graphiques
+        /// </summary>
+        /// <param name="acces">true ou false</param>
+        private void AccesCommandeGroupBox(bool acces)
+        {
+            grbNouvelleCommandeLivre.Enabled = acces;
+            txbNumNewCommandeLivre.Text = "";
+            txbNewMontantCommandeLivre.Text = "";
+            txbNewNbExCommandeLivre.Text = "";
+            dtpNewCommandeLivre.Value = DateTime.Now;
+        }
+
+        /// <summary>
         /// Affichage des informations du livre sélectionné
         /// </summary>
         /// <param name="revue">la revue</param>
@@ -2051,6 +2066,7 @@ namespace MediaTekDocuments.view
                 pcbCommandeLivreImage.Image = null;
             }
             AfficheCommandesLivre();
+            AccesCommandeGroupBox(true);
         }
 
         private void btnCommandeLivreRechercher_Click(object sender, EventArgs e)
@@ -2081,6 +2097,7 @@ namespace MediaTekDocuments.view
             txbCommandeLivreTitre.Text = "";
             pcbCommandeLivreImage.Image = null;
             RemplirCommandesListe(null);
+            AccesCommandeGroupBox(false);
         }
 
         /// <summary>
@@ -2115,8 +2132,46 @@ namespace MediaTekDocuments.view
             RemplirCommandesListe(sortedList);
         }
 
+        private void btnValiderCommandeLivre_Click(object sender, EventArgs e)
+        {
+            // Vérification que tous les champs sont remplis
+            if (txbNumNewCommandeLivre.Text == "" ||
+                txbNewMontantCommandeLivre.Text == "" ||
+                txbNewNbExCommandeLivre.Text == "")
+            {
+                MessageBox.Show("Tous les champs sont obligatoires", "Information");
+                return;
+            }
+
+            try
+            {
+                string numCommande = txbNumNewCommandeLivre.Text;
+                DateTime dateCommande = dtpNewCommandeLivre.Value;
+                decimal montant = decimal.Parse(txbNewMontantCommandeLivre.Text);
+                int nbExemplaire = int.Parse(txbNewNbExCommandeLivre.Text);
+                string idLivreDvd = txbCommandeLivreNumero.Text;
+                string idSuivi = SUIVIENCOURS;
+
+                CommandeDocument commande = new CommandeDocument(numCommande, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi);
+
+                if (controller.CreerCommandeDocument(commande))
+                {
+                    AfficheCommandesLivre();
+                    MessageBox.Show("Commande enregistrée avec succès", "Information");
+                }
+                else
+                {
+                    MessageBox.Show("Numéro de commande déjà existant", "Erreur");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Vérifiez les données saisies (montant et nombre d'exemplaires doivent être numériques)", "Erreur");
+            }
+        }
 
 
         #endregion
+
     }
 }

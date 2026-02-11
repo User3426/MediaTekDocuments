@@ -176,5 +176,15 @@ namespace MediaTekDocuments.controller
         {
             return access.UpdateRevue(revue);
         }
+
+        /// <summary>
+        /// Création d'une commande de document (livre/DVD)
+        /// </summary>
+        /// <param name="commande">objet CommandeDocument</param>
+        /// <returns>true si création réussie</returns>
+        public bool CreerCommandeDocument(CommandeDocument commande)
+        {
+            return access.CreerCommandeDocument(commande);
+        }
     }
 }

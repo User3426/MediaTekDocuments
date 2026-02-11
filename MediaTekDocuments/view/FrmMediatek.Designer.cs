@@ -227,7 +227,7 @@ namespace MediaTekDocuments.view
             this.label67 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.rbNouvelleCommandeLivre = new System.Windows.Forms.GroupBox();
+            this.grbNouvelleCommandeLivre = new System.Windows.Forms.GroupBox();
             this.label71 = new System.Windows.Forms.Label();
             this.label72 = new System.Windows.Forms.Label();
             this.label73 = new System.Windows.Forms.Label();
@@ -264,7 +264,7 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeLivreImage)).BeginInit();
-            this.rbNouvelleCommandeLivre.SuspendLayout();
+            this.grbNouvelleCommandeLivre.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabOngletsApplication
@@ -2117,7 +2117,7 @@ namespace MediaTekDocuments.view
             // 
             // tabCommandeLivre
             // 
-            this.tabCommandeLivre.Controls.Add(this.rbNouvelleCommandeLivre);
+            this.tabCommandeLivre.Controls.Add(this.grbNouvelleCommandeLivre);
             this.tabCommandeLivre.Controls.Add(this.grpReceptionLivre);
             this.tabCommandeLivre.Location = new System.Drawing.Point(4, 22);
             this.tabCommandeLivre.Name = "tabCommandeLivre";
@@ -2371,23 +2371,23 @@ namespace MediaTekDocuments.view
             this.label69.TabIndex = 39;
             this.label69.Text = "Code ISBN :";
             // 
-            // rbNouvelleCommandeLivre
+            // grbNouvelleCommandeLivre
             // 
-            this.rbNouvelleCommandeLivre.Controls.Add(this.btnValiderCommandeLivre);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.txbNewNbExCommandeLivre);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.txbNewMontantCommandeLivre);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.txbNumNewCommandeLivre);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.dtpNewCommandeLivre);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.label74);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.label73);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.label72);
-            this.rbNouvelleCommandeLivre.Controls.Add(this.label71);
-            this.rbNouvelleCommandeLivre.Location = new System.Drawing.Point(8, 449);
-            this.rbNouvelleCommandeLivre.Name = "rbNouvelleCommandeLivre";
-            this.rbNouvelleCommandeLivre.Size = new System.Drawing.Size(856, 277);
-            this.rbNouvelleCommandeLivre.TabIndex = 1;
-            this.rbNouvelleCommandeLivre.TabStop = false;
-            this.rbNouvelleCommandeLivre.Text = "Nouvelle commande";
+            this.grbNouvelleCommandeLivre.Controls.Add(this.btnValiderCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNewNbExCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNewMontantCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNumNewCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.dtpNewCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label74);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label73);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label72);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label71);
+            this.grbNouvelleCommandeLivre.Location = new System.Drawing.Point(8, 449);
+            this.grbNouvelleCommandeLivre.Name = "grbNouvelleCommandeLivre";
+            this.grbNouvelleCommandeLivre.Size = new System.Drawing.Size(856, 277);
+            this.grbNouvelleCommandeLivre.TabIndex = 1;
+            this.grbNouvelleCommandeLivre.TabStop = false;
+            this.grbNouvelleCommandeLivre.Text = "Nouvelle commande";
             // 
             // label71
             // 
@@ -2462,6 +2462,7 @@ namespace MediaTekDocuments.view
             this.btnValiderCommandeLivre.TabIndex = 64;
             this.btnValiderCommandeLivre.Text = "Valider nouvelle commande";
             this.btnValiderCommandeLivre.UseVisualStyleBackColor = true;
+            this.btnValiderCommandeLivre.Click += new System.EventHandler(this.btnValiderCommandeLivre_Click);
             // 
             // FrmMediatek
             // 
@@ -2507,8 +2508,8 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeLivreImage)).EndInit();
-            this.rbNouvelleCommandeLivre.ResumeLayout(false);
-            this.rbNouvelleCommandeLivre.PerformLayout();
+            this.grbNouvelleCommandeLivre.ResumeLayout(false);
+            this.grbNouvelleCommandeLivre.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2713,7 +2714,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnCommandeLivreRechercher;
         private System.Windows.Forms.DataGridView dgvCommandeLivre;
         private System.Windows.Forms.TextBox txbCommandeLivreNumero;
-        private System.Windows.Forms.GroupBox rbNouvelleCommandeLivre;
+        private System.Windows.Forms.GroupBox grbNouvelleCommandeLivre;
         private System.Windows.Forms.Label label71;
         private System.Windows.Forms.Label label72;
         private System.Windows.Forms.Label label73;

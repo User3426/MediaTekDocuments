@@ -351,6 +351,29 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Création d'une commande de document dans la base
+        /// </summary>
+        /// <param name="commande">objet CommandeDocument</param>
+        /// <returns>true si insertion réussie</returns>
+        public bool CreerCommandeDocument(CommandeDocument commande)
+        {
+            // Créer le JSON pour la commande
+            String jsonCommande = JsonConvert.SerializeObject(commande);
+
+            try
+            {
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(POST, "commandedocument", "champs=" + jsonCommande);
+                return (liste != null);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
         /// </summary>
         /// <typeparam name="T"></typeparam>
