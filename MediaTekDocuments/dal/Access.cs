@@ -171,6 +171,27 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Suppression d'une commande de document
+        /// </summary>
+        /// <param name="commande">objet CommandeDocument à supprimer</param>
+        /// <returns>true si suppression réussie</returns>
+        public bool DelCommandeDocument(CommandeDocument commande)
+        {
+            String jsonIdCommande = JsonConvert.SerializeObject(new { id = commande.Id });
+            try
+            {
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(DELETE, "commande/" + jsonIdCommande, null);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Retourne toutes les dvd à partir de la BDD
         /// </summary>
         /// <returns>Liste d'objets Dvd</returns>

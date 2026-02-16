@@ -203,6 +203,16 @@ namespace MediaTekDocuments.view
             this.label54 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
             this.tabCommandeLivre = new System.Windows.Forms.TabPage();
+            this.grbNouvelleCommandeLivre = new System.Windows.Forms.GroupBox();
+            this.btnValiderCommandeLivre = new System.Windows.Forms.Button();
+            this.txbNewNbExCommandeLivre = new System.Windows.Forms.TextBox();
+            this.txbNewMontantCommandeLivre = new System.Windows.Forms.TextBox();
+            this.txbNumNewCommandeLivre = new System.Windows.Forms.TextBox();
+            this.dtpNewCommandeLivre = new System.Windows.Forms.DateTimePicker();
+            this.label74 = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.label72 = new System.Windows.Forms.Label();
+            this.label71 = new System.Windows.Forms.Label();
             this.grpReceptionLivre = new System.Windows.Forms.GroupBox();
             this.txbCommandeLivreNumero = new System.Windows.Forms.TextBox();
             this.btnCommandeLivreRechercher = new System.Windows.Forms.Button();
@@ -227,16 +237,7 @@ namespace MediaTekDocuments.view
             this.label67 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.grbNouvelleCommandeLivre = new System.Windows.Forms.GroupBox();
-            this.label71 = new System.Windows.Forms.Label();
-            this.label72 = new System.Windows.Forms.Label();
-            this.label73 = new System.Windows.Forms.Label();
-            this.label74 = new System.Windows.Forms.Label();
-            this.dtpNewCommandeLivre = new System.Windows.Forms.DateTimePicker();
-            this.txbNumNewCommandeLivre = new System.Windows.Forms.TextBox();
-            this.txbNewMontantCommandeLivre = new System.Windows.Forms.TextBox();
-            this.txbNewNbExCommandeLivre = new System.Windows.Forms.TextBox();
-            this.btnValiderCommandeLivre = new System.Windows.Forms.Button();
+            this.btnSupprimerCommande = new System.Windows.Forms.Button();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -261,10 +262,10 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).BeginInit();
             this.tabCommandeLivre.SuspendLayout();
+            this.grbNouvelleCommandeLivre.SuspendLayout();
             this.grpReceptionLivre.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeLivreImage)).BeginInit();
-            this.grbNouvelleCommandeLivre.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabOngletsApplication
@@ -2128,8 +2129,102 @@ namespace MediaTekDocuments.view
             this.tabCommandeLivre.UseVisualStyleBackColor = true;
             this.tabCommandeLivre.Enter += new System.EventHandler(this.tabCommandeLivre_Enter);
             // 
+            // grbNouvelleCommandeLivre
+            // 
+            this.grbNouvelleCommandeLivre.Controls.Add(this.btnValiderCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNewNbExCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNewMontantCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNumNewCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.dtpNewCommandeLivre);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label74);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label73);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label72);
+            this.grbNouvelleCommandeLivre.Controls.Add(this.label71);
+            this.grbNouvelleCommandeLivre.Location = new System.Drawing.Point(8, 460);
+            this.grbNouvelleCommandeLivre.Name = "grbNouvelleCommandeLivre";
+            this.grbNouvelleCommandeLivre.Size = new System.Drawing.Size(856, 266);
+            this.grbNouvelleCommandeLivre.TabIndex = 1;
+            this.grbNouvelleCommandeLivre.TabStop = false;
+            this.grbNouvelleCommandeLivre.Text = "Nouvelle commande";
+            // 
+            // btnValiderCommandeLivre
+            // 
+            this.btnValiderCommandeLivre.Location = new System.Drawing.Point(36, 168);
+            this.btnValiderCommandeLivre.Name = "btnValiderCommandeLivre";
+            this.btnValiderCommandeLivre.Size = new System.Drawing.Size(253, 23);
+            this.btnValiderCommandeLivre.TabIndex = 64;
+            this.btnValiderCommandeLivre.Text = "Valider nouvelle commande";
+            this.btnValiderCommandeLivre.UseVisualStyleBackColor = true;
+            this.btnValiderCommandeLivre.Click += new System.EventHandler(this.btnValiderCommandeLivre_Click);
+            // 
+            // txbNewNbExCommandeLivre
+            // 
+            this.txbNewNbExCommandeLivre.Location = new System.Drawing.Point(189, 125);
+            this.txbNewNbExCommandeLivre.Name = "txbNewNbExCommandeLivre";
+            this.txbNewNbExCommandeLivre.Size = new System.Drawing.Size(100, 20);
+            this.txbNewNbExCommandeLivre.TabIndex = 63;
+            // 
+            // txbNewMontantCommandeLivre
+            // 
+            this.txbNewMontantCommandeLivre.Location = new System.Drawing.Point(189, 94);
+            this.txbNewMontantCommandeLivre.Name = "txbNewMontantCommandeLivre";
+            this.txbNewMontantCommandeLivre.Size = new System.Drawing.Size(100, 20);
+            this.txbNewMontantCommandeLivre.TabIndex = 62;
+            // 
+            // txbNumNewCommandeLivre
+            // 
+            this.txbNumNewCommandeLivre.Location = new System.Drawing.Point(189, 28);
+            this.txbNumNewCommandeLivre.Name = "txbNumNewCommandeLivre";
+            this.txbNumNewCommandeLivre.Size = new System.Drawing.Size(100, 20);
+            this.txbNumNewCommandeLivre.TabIndex = 61;
+            // 
+            // dtpNewCommandeLivre
+            // 
+            this.dtpNewCommandeLivre.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpNewCommandeLivre.Location = new System.Drawing.Point(189, 58);
+            this.dtpNewCommandeLivre.Name = "dtpNewCommandeLivre";
+            this.dtpNewCommandeLivre.Size = new System.Drawing.Size(100, 20);
+            this.dtpNewCommandeLivre.TabIndex = 4;
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Location = new System.Drawing.Point(33, 128);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(114, 13);
+            this.label74.TabIndex = 3;
+            this.label74.Text = "nombre d\'exemplaires :";
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Location = new System.Drawing.Point(33, 97);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(51, 13);
+            this.label73.TabIndex = 2;
+            this.label73.Text = "montant :";
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Location = new System.Drawing.Point(33, 64);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(104, 13);
+            this.label72.TabIndex = 1;
+            this.label72.Text = "date de commande :";
+            // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.Location = new System.Drawing.Point(33, 31);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(120, 13);
+            this.label71.TabIndex = 0;
+            this.label71.Text = "Numero de commande :";
+            // 
             // grpReceptionLivre
             // 
+            this.grpReceptionLivre.Controls.Add(this.btnSupprimerCommande);
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreNumero);
             this.grpReceptionLivre.Controls.Add(this.btnCommandeLivreRechercher);
             this.grpReceptionLivre.Controls.Add(this.dgvCommandeLivre);
@@ -2155,7 +2250,7 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.Controls.Add(this.label69);
             this.grpReceptionLivre.Location = new System.Drawing.Point(7, 9);
             this.grpReceptionLivre.Name = "grpReceptionLivre";
-            this.grpReceptionLivre.Size = new System.Drawing.Size(858, 422);
+            this.grpReceptionLivre.Size = new System.Drawing.Size(858, 445);
             this.grpReceptionLivre.TabIndex = 0;
             this.grpReceptionLivre.TabStop = false;
             this.grpReceptionLivre.Text = "Recherche livre";
@@ -2371,98 +2466,15 @@ namespace MediaTekDocuments.view
             this.label69.TabIndex = 39;
             this.label69.Text = "Code ISBN :";
             // 
-            // grbNouvelleCommandeLivre
+            // btnSupprimerCommande
             // 
-            this.grbNouvelleCommandeLivre.Controls.Add(this.btnValiderCommandeLivre);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNewNbExCommandeLivre);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNewMontantCommandeLivre);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.txbNumNewCommandeLivre);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.dtpNewCommandeLivre);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.label74);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.label73);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.label72);
-            this.grbNouvelleCommandeLivre.Controls.Add(this.label71);
-            this.grbNouvelleCommandeLivre.Location = new System.Drawing.Point(8, 449);
-            this.grbNouvelleCommandeLivre.Name = "grbNouvelleCommandeLivre";
-            this.grbNouvelleCommandeLivre.Size = new System.Drawing.Size(856, 277);
-            this.grbNouvelleCommandeLivre.TabIndex = 1;
-            this.grbNouvelleCommandeLivre.TabStop = false;
-            this.grbNouvelleCommandeLivre.Text = "Nouvelle commande";
-            // 
-            // label71
-            // 
-            this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(33, 31);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(120, 13);
-            this.label71.TabIndex = 0;
-            this.label71.Text = "Numero de commande :";
-            // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(33, 64);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(104, 13);
-            this.label72.TabIndex = 1;
-            this.label72.Text = "date de commande :";
-            // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.Location = new System.Drawing.Point(33, 97);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(51, 13);
-            this.label73.TabIndex = 2;
-            this.label73.Text = "montant :";
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(33, 128);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(114, 13);
-            this.label74.TabIndex = 3;
-            this.label74.Text = "nombre d\'exemplaires :";
-            // 
-            // dtpNewCommandeLivre
-            // 
-            this.dtpNewCommandeLivre.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNewCommandeLivre.Location = new System.Drawing.Point(189, 58);
-            this.dtpNewCommandeLivre.Name = "dtpNewCommandeLivre";
-            this.dtpNewCommandeLivre.Size = new System.Drawing.Size(100, 20);
-            this.dtpNewCommandeLivre.TabIndex = 4;
-            // 
-            // txbNumNewCommandeLivre
-            // 
-            this.txbNumNewCommandeLivre.Location = new System.Drawing.Point(189, 28);
-            this.txbNumNewCommandeLivre.Name = "txbNumNewCommandeLivre";
-            this.txbNumNewCommandeLivre.Size = new System.Drawing.Size(100, 20);
-            this.txbNumNewCommandeLivre.TabIndex = 61;
-            // 
-            // txbNewMontantCommandeLivre
-            // 
-            this.txbNewMontantCommandeLivre.Location = new System.Drawing.Point(189, 94);
-            this.txbNewMontantCommandeLivre.Name = "txbNewMontantCommandeLivre";
-            this.txbNewMontantCommandeLivre.Size = new System.Drawing.Size(100, 20);
-            this.txbNewMontantCommandeLivre.TabIndex = 62;
-            // 
-            // txbNewNbExCommandeLivre
-            // 
-            this.txbNewNbExCommandeLivre.Location = new System.Drawing.Point(189, 125);
-            this.txbNewNbExCommandeLivre.Name = "txbNewNbExCommandeLivre";
-            this.txbNewNbExCommandeLivre.Size = new System.Drawing.Size(100, 20);
-            this.txbNewNbExCommandeLivre.TabIndex = 63;
-            // 
-            // btnValiderCommandeLivre
-            // 
-            this.btnValiderCommandeLivre.Location = new System.Drawing.Point(36, 168);
-            this.btnValiderCommandeLivre.Name = "btnValiderCommandeLivre";
-            this.btnValiderCommandeLivre.Size = new System.Drawing.Size(253, 23);
-            this.btnValiderCommandeLivre.TabIndex = 64;
-            this.btnValiderCommandeLivre.Text = "Valider nouvelle commande";
-            this.btnValiderCommandeLivre.UseVisualStyleBackColor = true;
-            this.btnValiderCommandeLivre.Click += new System.EventHandler(this.btnValiderCommandeLivre_Click);
+            this.btnSupprimerCommande.Location = new System.Drawing.Point(387, 415);
+            this.btnSupprimerCommande.Name = "btnSupprimerCommande";
+            this.btnSupprimerCommande.Size = new System.Drawing.Size(152, 23);
+            this.btnSupprimerCommande.TabIndex = 61;
+            this.btnSupprimerCommande.Text = "Supprimer la commande";
+            this.btnSupprimerCommande.UseVisualStyleBackColor = true;
+            this.btnSupprimerCommande.Click += new System.EventHandler(this.btnSupprimerCommande_Click);
             // 
             // FrmMediatek
             // 
@@ -2504,12 +2516,12 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).EndInit();
             this.tabCommandeLivre.ResumeLayout(false);
+            this.grbNouvelleCommandeLivre.ResumeLayout(false);
+            this.grbNouvelleCommandeLivre.PerformLayout();
             this.grpReceptionLivre.ResumeLayout(false);
             this.grpReceptionLivre.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeLivreImage)).EndInit();
-            this.grbNouvelleCommandeLivre.ResumeLayout(false);
-            this.grbNouvelleCommandeLivre.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2724,6 +2736,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.DateTimePicker dtpNewCommandeLivre;
         private System.Windows.Forms.TextBox txbNewNbExCommandeLivre;
         private System.Windows.Forms.Button btnValiderCommandeLivre;
+        private System.Windows.Forms.Button btnSupprimerCommande;
     }
 }
 

@@ -186,5 +186,10 @@ namespace MediaTekDocuments.controller
         {
             return access.CreerCommandeDocument(commande);
         }
+
+        public bool DelCommandeDocument(CommandeDocument commande)
+        {
+            return access.DelCommandeDocument(commande);
+        }
     }
 }

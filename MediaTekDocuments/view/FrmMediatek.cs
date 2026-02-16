@@ -2176,6 +2176,38 @@ namespace MediaTekDocuments.view
             }
         }
 
+        private void btnSupprimerCommande_Click(object sender, EventArgs e)
+        {
+            if (dgvCommandeLivre.SelectedRows.Count > 0)
+            {
+                CommandeDocument commande = (CommandeDocument)bdgCommandes.List[bdgCommandes.Position];
+
+                if (commande.LibelleSuivi.ToLower() == "livrée" || commande.LibelleSuivi.ToLower() == "livree")
+                {
+                    MessageBox.Show("Impossible de supprimer une commande déjà livrée.", "Suppression impossible");
+                    return;
+                }
+
+                if (MessageBox.Show("Voulez-vous vraiment supprimer la commande n°" + commande.Id + " ?",
+                    "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (controller.DelCommandeDocument(commande))
+                    {
+                        AfficheCommandesLivre();
+                        MessageBox.Show("Commande supprimée avec succès.", "Suppression réussie");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la suppression de la commande.", "Erreur");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+            }
+        }
+
 
         #endregion
 
