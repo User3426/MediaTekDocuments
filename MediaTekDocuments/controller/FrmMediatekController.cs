@@ -178,6 +178,16 @@ namespace MediaTekDocuments.controller
         }
 
         /// <summary>
+        /// Modifie l'étape de suivi d'une commande de document dans la BDD
+        /// </summary>
+        /// <param name="commande">objet CommandeDocument avec le nouvel état</param>
+        /// <returns>true si modification réussie</returns>
+        public bool UpdateCommandeDocument(CommandeDocument commande)
+        {
+            return access.UpdateCommandeDocument(commande);
+        }
+
+        /// <summary>
         /// Création d'une commande de document (livre/DVD)
         /// </summary>
         /// <param name="commande">objet CommandeDocument</param>

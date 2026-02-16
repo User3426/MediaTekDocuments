@@ -2056,15 +2056,6 @@ namespace MediaTekDocuments.view
             txbCommandeLivrePublic.Text = livre.Public;
             txbCommandeLivreRayon.Text = livre.Rayon;
             txbCommandeLivreTitre.Text = livre.Titre;
-            string image = livre.Image;
-            try
-            {
-                pcbCommandeLivreImage.Image = Image.FromFile(image);
-            }
-            catch
-            {
-                pcbCommandeLivreImage.Image = null;
-            }
             AfficheCommandesLivre();
             AccesCommandeGroupBox(true);
         }
@@ -2095,7 +2086,6 @@ namespace MediaTekDocuments.view
             txbCommandeLivrePublic.Text = "";
             txbCommandeLivreRayon.Text = "";
             txbCommandeLivreTitre.Text = "";
-            pcbCommandeLivreImage.Image = null;
             RemplirCommandesListe(null);
             AccesCommandeGroupBox(false);
         }
@@ -2208,8 +2198,135 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Remplit la combobox des suivis avec uniquement les états autorisés
+        /// selon l'état actuel de la commande sélectionnée
+        /// </summary>
+        /// <param name="commandeSelectionnee">La commande sélectionnée</param>
+        private void RemplirCbxEtapeSuivi(CommandeDocument commandeSelectionnee)
+        {
+            cbxEtapeSuivi.Items.Clear();
+
+            if (commandeSelectionnee == null)
+            {
+                return;
+            }
+
+            string suiviActuel = commandeSelectionnee.IdSuivi;
+
+            // Règles de transition selon l'état actuel
+            switch (suiviActuel)
+            {
+                case "00001":
+                    cbxEtapeSuivi.Items.Add("en cours");
+                    cbxEtapeSuivi.Items.Add("relancée");
+                    cbxEtapeSuivi.Items.Add("livrée");
+                    break;
+
+                case "00002":
+                    cbxEtapeSuivi.Items.Add("relancée");
+                    cbxEtapeSuivi.Items.Add("livrée");
+                    break;
+
+                case "00003":
+                    cbxEtapeSuivi.Items.Add("livrée");
+                    cbxEtapeSuivi.Items.Add("réglée");
+                    break;
+
+                case "00004":
+                    cbxEtapeSuivi.Items.Add("réglée");
+                    break;
+            }
+
+            // Sélectionner le premier élément s'il y en a
+            if (cbxEtapeSuivi.Items.Count > 0)
+            {
+                cbxEtapeSuivi.SelectedIndex = 0;
+            }
+        }
+
+        /// <summary>
+        /// charge les étapes correspondant à la commande dans la combobox
+        /// à chaque nouvelle sélection dans le datagridview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvCommandeLivre_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvCommandeLivre.SelectedRows.Count > 0)
+            {
+                CommandeDocument commande = (CommandeDocument)bdgCommandes.List[bdgCommandes.Position];
+                RemplirCbxEtapeSuivi(commande);
+            }
+        }
+
+        /// <summary>
+        /// Validation du changement d'étape de suivi d'une commande
+        /// </summary>
+        private void btnValiderModifEtape_Click(object sender, EventArgs e)
+        {
+            if (dgvCommandeLivre.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Veuillez sélectionner une commande.", "Information");
+                return;
+            }
+
+            if (cbxEtapeSuivi.SelectedItem == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une nouvelle étape.", "Information");
+                return;
+            }
+
+            CommandeDocument commande = (CommandeDocument)bdgCommandes.List[bdgCommandes.Position];
+            string nouveauLibelleSuivi = cbxEtapeSuivi.SelectedItem.ToString();
+            string nouvelIdSuivi = ConvertirLibelleSuiviEnId(nouveauLibelleSuivi);
+
+            if (nouvelIdSuivi == null)
+            {
+                MessageBox.Show("Erreur lors de la récupération de l'état de suivi.", "Erreur");
+                return;
+            }
+
+            if (MessageBox.Show($"Voulez-vous vraiment passer la commande n°{commande.Id} à l'étape '{nouveauLibelleSuivi}' ?",
+                "Confirmation de modification", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                commande.IdSuivi = nouvelIdSuivi;
+                if (controller.UpdateCommandeDocument(commande))
+                {
+                    AfficheCommandesLivre();
+                    MessageBox.Show("Étape de suivi modifiée avec succès.", "Succès");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la modification de l'étape de suivi.", "Erreur");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Convertit un libellé de suivi en ID correspondant
+        /// </summary>
+        /// <param name="libelle">Libellé du suivi</param>
+        /// <returns>ID du suivi ou null si non trouvé</returns>
+        private string ConvertirLibelleSuiviEnId(string libelle)
+        {
+            switch (libelle.ToLower())
+            {
+                case "en cours":
+                    return "00001";
+                case "relancée":
+                    return "00002";
+                case "livrée":
+                    return "00003";
+                case "réglée":
+                    return "00004";
+                default:
+                    return null;
+            }
+        }
 
         #endregion
+
 
     }
 }

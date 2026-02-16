@@ -214,11 +214,11 @@ namespace MediaTekDocuments.view
             this.label72 = new System.Windows.Forms.Label();
             this.label71 = new System.Windows.Forms.Label();
             this.grpReceptionLivre = new System.Windows.Forms.GroupBox();
+            this.btnSupprimerCommande = new System.Windows.Forms.Button();
             this.txbCommandeLivreNumero = new System.Windows.Forms.TextBox();
             this.btnCommandeLivreRechercher = new System.Windows.Forms.Button();
             this.dgvCommandeLivre = new System.Windows.Forms.DataGridView();
             this.label70 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
             this.txbCommandeLivreIsbn = new System.Windows.Forms.TextBox();
             this.txbCommandeLivreCheminImg = new System.Windows.Forms.TextBox();
             this.txbCommandeLivreRayon = new System.Windows.Forms.TextBox();
@@ -228,7 +228,6 @@ namespace MediaTekDocuments.view
             this.txbCommandeLivreAuteur = new System.Windows.Forms.TextBox();
             this.txbCommandeLivreTitre = new System.Windows.Forms.TextBox();
             this.label61 = new System.Windows.Forms.Label();
-            this.pcbCommandeLivreImage = new System.Windows.Forms.PictureBox();
             this.label62 = new System.Windows.Forms.Label();
             this.label63 = new System.Windows.Forms.Label();
             this.label64 = new System.Windows.Forms.Label();
@@ -237,7 +236,9 @@ namespace MediaTekDocuments.view
             this.label67 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.btnSupprimerCommande = new System.Windows.Forms.Button();
+            this.cbxEtapeSuivi = new System.Windows.Forms.ComboBox();
+            this.label75 = new System.Windows.Forms.Label();
+            this.btnValiderModifEtape = new System.Windows.Forms.Button();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -265,7 +266,6 @@ namespace MediaTekDocuments.view
             this.grbNouvelleCommandeLivre.SuspendLayout();
             this.grpReceptionLivre.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeLivreImage)).BeginInit();
             this.SuspendLayout();
             // 
             // tabOngletsApplication
@@ -2142,7 +2142,7 @@ namespace MediaTekDocuments.view
             this.grbNouvelleCommandeLivre.Controls.Add(this.label71);
             this.grbNouvelleCommandeLivre.Location = new System.Drawing.Point(8, 460);
             this.grbNouvelleCommandeLivre.Name = "grbNouvelleCommandeLivre";
-            this.grbNouvelleCommandeLivre.Size = new System.Drawing.Size(856, 266);
+            this.grbNouvelleCommandeLivre.Size = new System.Drawing.Size(321, 268);
             this.grbNouvelleCommandeLivre.TabIndex = 1;
             this.grbNouvelleCommandeLivre.TabStop = false;
             this.grbNouvelleCommandeLivre.Text = "Nouvelle commande";
@@ -2224,12 +2224,14 @@ namespace MediaTekDocuments.view
             // 
             // grpReceptionLivre
             // 
+            this.grpReceptionLivre.Controls.Add(this.btnValiderModifEtape);
+            this.grpReceptionLivre.Controls.Add(this.label75);
+            this.grpReceptionLivre.Controls.Add(this.cbxEtapeSuivi);
             this.grpReceptionLivre.Controls.Add(this.btnSupprimerCommande);
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreNumero);
             this.grpReceptionLivre.Controls.Add(this.btnCommandeLivreRechercher);
             this.grpReceptionLivre.Controls.Add(this.dgvCommandeLivre);
             this.grpReceptionLivre.Controls.Add(this.label70);
-            this.grpReceptionLivre.Controls.Add(this.label60);
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreIsbn);
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreCheminImg);
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreRayon);
@@ -2239,7 +2241,6 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreAuteur);
             this.grpReceptionLivre.Controls.Add(this.txbCommandeLivreTitre);
             this.grpReceptionLivre.Controls.Add(this.label61);
-            this.grpReceptionLivre.Controls.Add(this.pcbCommandeLivreImage);
             this.grpReceptionLivre.Controls.Add(this.label62);
             this.grpReceptionLivre.Controls.Add(this.label63);
             this.grpReceptionLivre.Controls.Add(this.label64);
@@ -2254,6 +2255,16 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.TabIndex = 0;
             this.grpReceptionLivre.TabStop = false;
             this.grpReceptionLivre.Text = "Recherche livre";
+            // 
+            // btnSupprimerCommande
+            // 
+            this.btnSupprimerCommande.Location = new System.Drawing.Point(676, 378);
+            this.btnSupprimerCommande.Name = "btnSupprimerCommande";
+            this.btnSupprimerCommande.Size = new System.Drawing.Size(152, 31);
+            this.btnSupprimerCommande.TabIndex = 61;
+            this.btnSupprimerCommande.Text = "Supprimer la commande";
+            this.btnSupprimerCommande.UseVisualStyleBackColor = true;
+            this.btnSupprimerCommande.Click += new System.EventHandler(this.btnSupprimerCommande_Click);
             // 
             // txbCommandeLivreNumero
             // 
@@ -2278,9 +2289,10 @@ namespace MediaTekDocuments.view
             this.dgvCommandeLivre.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCommandeLivre.Location = new System.Drawing.Point(148, 240);
             this.dgvCommandeLivre.Name = "dgvCommandeLivre";
-            this.dgvCommandeLivre.Size = new System.Drawing.Size(391, 169);
+            this.dgvCommandeLivre.Size = new System.Drawing.Size(465, 169);
             this.dgvCommandeLivre.TabIndex = 58;
             this.dgvCommandeLivre.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCommandeLivre_ColumnHeaderMouseClick);
+            this.dgvCommandeLivre.SelectionChanged += new System.EventHandler(this.dgvCommandeLivre_SelectionChanged);
             // 
             // label70
             // 
@@ -2291,16 +2303,6 @@ namespace MediaTekDocuments.view
             this.label70.Size = new System.Drawing.Size(82, 13);
             this.label70.TabIndex = 57;
             this.label70.Text = "Commandes :";
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label60.Location = new System.Drawing.Point(555, 171);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(49, 13);
-            this.label60.TabIndex = 56;
-            this.label60.Text = "Image :";
             // 
             // txbCommandeLivreIsbn
             // 
@@ -2375,16 +2377,6 @@ namespace MediaTekDocuments.view
             this.label61.Size = new System.Drawing.Size(49, 13);
             this.label61.TabIndex = 46;
             this.label61.Text = "Genre :";
-            // 
-            // pcbCommandeLivreImage
-            // 
-            this.pcbCommandeLivreImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pcbCommandeLivreImage.Location = new System.Drawing.Point(558, 199);
-            this.pcbCommandeLivreImage.Name = "pcbCommandeLivreImage";
-            this.pcbCommandeLivreImage.Size = new System.Drawing.Size(284, 210);
-            this.pcbCommandeLivreImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pcbCommandeLivreImage.TabIndex = 45;
-            this.pcbCommandeLivreImage.TabStop = false;
             // 
             // label62
             // 
@@ -2466,15 +2458,33 @@ namespace MediaTekDocuments.view
             this.label69.TabIndex = 39;
             this.label69.Text = "Code ISBN :";
             // 
-            // btnSupprimerCommande
+            // cbxEtapeSuivi
             // 
-            this.btnSupprimerCommande.Location = new System.Drawing.Point(387, 415);
-            this.btnSupprimerCommande.Name = "btnSupprimerCommande";
-            this.btnSupprimerCommande.Size = new System.Drawing.Size(152, 23);
-            this.btnSupprimerCommande.TabIndex = 61;
-            this.btnSupprimerCommande.Text = "Supprimer la commande";
-            this.btnSupprimerCommande.UseVisualStyleBackColor = true;
-            this.btnSupprimerCommande.Click += new System.EventHandler(this.btnSupprimerCommande_Click);
+            this.cbxEtapeSuivi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxEtapeSuivi.FormattingEnabled = true;
+            this.cbxEtapeSuivi.Location = new System.Drawing.Point(619, 249);
+            this.cbxEtapeSuivi.Name = "cbxEtapeSuivi";
+            this.cbxEtapeSuivi.Size = new System.Drawing.Size(209, 21);
+            this.cbxEtapeSuivi.TabIndex = 62;
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Location = new System.Drawing.Point(616, 221);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(204, 13);
+            this.label75.TabIndex = 63;
+            this.label75.Text = "Modifier l\'étape de suivi de la commande :";
+            // 
+            // btnValiderModifEtape
+            // 
+            this.btnValiderModifEtape.Location = new System.Drawing.Point(676, 289);
+            this.btnValiderModifEtape.Name = "btnValiderModifEtape";
+            this.btnValiderModifEtape.Size = new System.Drawing.Size(152, 31);
+            this.btnValiderModifEtape.TabIndex = 64;
+            this.btnValiderModifEtape.Text = "Valider Etape";
+            this.btnValiderModifEtape.UseVisualStyleBackColor = true;
+            this.btnValiderModifEtape.Click += new System.EventHandler(this.btnValiderModifEtape_Click);
             // 
             // FrmMediatek
             // 
@@ -2521,7 +2531,6 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.ResumeLayout(false);
             this.grpReceptionLivre.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeLivreImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2703,7 +2712,6 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnModifRevueValider;
         private System.Windows.Forms.TabPage tabCommandeLivre;
         private System.Windows.Forms.GroupBox grpReceptionLivre;
-        private System.Windows.Forms.Label label60;
         private System.Windows.Forms.TextBox txbCommandeLivreIsbn;
         private System.Windows.Forms.TextBox txbCommandeLivreCheminImg;
         private System.Windows.Forms.TextBox txbCommandeLivreRayon;
@@ -2713,7 +2721,6 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.TextBox txbCommandeLivreAuteur;
         private System.Windows.Forms.TextBox txbCommandeLivreTitre;
         private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.PictureBox pcbCommandeLivreImage;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Label label63;
         private System.Windows.Forms.Label label64;
@@ -2737,6 +2744,9 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.TextBox txbNewNbExCommandeLivre;
         private System.Windows.Forms.Button btnValiderCommandeLivre;
         private System.Windows.Forms.Button btnSupprimerCommande;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.ComboBox cbxEtapeSuivi;
+        private System.Windows.Forms.Button btnValiderModifEtape;
     }
 }
 

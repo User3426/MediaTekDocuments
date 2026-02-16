@@ -317,6 +317,26 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Modifie l'étape de suivi d'une commande de document dans la BDD
+        /// </summary>
+        /// <param name="commande">objet CommandeDocument</param>
+        /// <returns>true si la modification a réussi</returns>
+        public bool UpdateCommandeDocument(CommandeDocument commande)
+        {
+            String jsonCommande = JsonConvert.SerializeObject(commande);
+            try
+            {
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(PUT, "commandedocument/" + commande.Id, "champs=" + jsonCommande);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur UpdateCommandeDocument : " + ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Crée un livre dans la bdd
         /// </summary>
         /// <param name="livre">le livre à ajouter</param>
