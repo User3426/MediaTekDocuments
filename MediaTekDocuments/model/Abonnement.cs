@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MediaTekDocuments.model
+{
+    class Abonnement : Commande
+    {
+        public DateTime DateFinAbonnement { get; set; }
+        public string IdRevue { get; set; }
+
+        public Abonnement(string id, DateTime dateCommande, decimal montant, 
+            DateTime dateFinAbonnement, string idRevue)
+            : base(id, dateCommande, montant) 
+        {
+            DateFinAbonnement = dateFinAbonnement;
+            IdRevue = idRevue;
+        }
+    }
+}
