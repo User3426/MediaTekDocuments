@@ -2325,8 +2325,7 @@ namespace MediaTekDocuments.view
             }
         }
 
+
         #endregion
-
-
     }
 }
