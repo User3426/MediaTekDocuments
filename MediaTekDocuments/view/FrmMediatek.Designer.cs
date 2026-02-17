@@ -239,7 +239,7 @@ namespace MediaTekDocuments.view
             this.label67 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabCommandeDvd = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label60 = new System.Windows.Forms.Label();
             this.txbCommandeDvdDuree = new System.Windows.Forms.TextBox();
@@ -260,7 +260,7 @@ namespace MediaTekDocuments.view
             this.label83 = new System.Windows.Forms.Label();
             this.label84 = new System.Windows.Forms.Label();
             this.txbCommandeDvdNumero = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCommandeDvdRechercher = new System.Windows.Forms.Button();
             this.label85 = new System.Windows.Forms.Label();
             this.btnValiderModifEtapeDvd = new System.Windows.Forms.Button();
             this.cbxEtapeSuiviDvd = new System.Windows.Forms.ComboBox();
@@ -305,7 +305,7 @@ namespace MediaTekDocuments.view
             this.grbNouvelleCommandeLivre.SuspendLayout();
             this.grpReceptionLivre.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.tabCommandeDvd.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeDvdImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeDvd)).BeginInit();
@@ -319,7 +319,7 @@ namespace MediaTekDocuments.view
             this.tabOngletsApplication.Controls.Add(this.tabRevues);
             this.tabOngletsApplication.Controls.Add(this.tabReceptionRevue);
             this.tabOngletsApplication.Controls.Add(this.tabCommandeLivre);
-            this.tabOngletsApplication.Controls.Add(this.tabPage1);
+            this.tabOngletsApplication.Controls.Add(this.tabCommandeDvd);
             this.tabOngletsApplication.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabOngletsApplication.ItemSize = new System.Drawing.Size(49, 18);
             this.tabOngletsApplication.Location = new System.Drawing.Point(0, 0);
@@ -2531,17 +2531,18 @@ namespace MediaTekDocuments.view
             this.label69.TabIndex = 39;
             this.label69.Text = "Code ISBN :";
             // 
-            // tabPage1
+            // tabCommandeDvd
             // 
-            this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(875, 736);
-            this.tabPage1.TabIndex = 6;
-            this.tabPage1.Text = "Commandes Dvd";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabCommandeDvd.Controls.Add(this.groupBox2);
+            this.tabCommandeDvd.Controls.Add(this.groupBox1);
+            this.tabCommandeDvd.Location = new System.Drawing.Point(4, 22);
+            this.tabCommandeDvd.Name = "tabCommandeDvd";
+            this.tabCommandeDvd.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCommandeDvd.Size = new System.Drawing.Size(875, 736);
+            this.tabCommandeDvd.TabIndex = 6;
+            this.tabCommandeDvd.Text = "Commandes Dvd";
+            this.tabCommandeDvd.UseVisualStyleBackColor = true;
+            this.tabCommandeDvd.Enter += new System.EventHandler(this.tabCommandeDvd_Enter);
             // 
             // groupBox1
             // 
@@ -2552,7 +2553,7 @@ namespace MediaTekDocuments.view
             this.groupBox1.Controls.Add(this.dgvCommandeDvd);
             this.groupBox1.Controls.Add(this.label80);
             this.groupBox1.Controls.Add(this.txbCommandeDvdNumero);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnCommandeDvdRechercher);
             this.groupBox1.Controls.Add(this.label85);
             this.groupBox1.Controls.Add(this.label60);
             this.groupBox1.Controls.Add(this.txbCommandeDvdDuree);
@@ -2752,15 +2753,17 @@ namespace MediaTekDocuments.view
             this.txbCommandeDvdNumero.Name = "txbCommandeDvdNumero";
             this.txbCommandeDvdNumero.Size = new System.Drawing.Size(100, 20);
             this.txbCommandeDvdNumero.TabIndex = 63;
+            this.txbCommandeDvdNumero.TextChanged += new System.EventHandler(this.txbCommandeDvdNumero_TextChanged);
             // 
-            // button1
+            // btnCommandeDvdRechercher
             // 
-            this.button1.Location = new System.Drawing.Point(301, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 62;
-            this.button1.Text = "rechercher";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCommandeDvdRechercher.Location = new System.Drawing.Point(301, 23);
+            this.btnCommandeDvdRechercher.Name = "btnCommandeDvdRechercher";
+            this.btnCommandeDvdRechercher.Size = new System.Drawing.Size(75, 23);
+            this.btnCommandeDvdRechercher.TabIndex = 62;
+            this.btnCommandeDvdRechercher.Text = "rechercher";
+            this.btnCommandeDvdRechercher.UseVisualStyleBackColor = true;
+            this.btnCommandeDvdRechercher.Click += new System.EventHandler(this.btnCommandeDvdRechercher_Click);
             // 
             // label85
             // 
@@ -2780,6 +2783,7 @@ namespace MediaTekDocuments.view
             this.btnValiderModifEtapeDvd.TabIndex = 69;
             this.btnValiderModifEtapeDvd.Text = "Valider Etape";
             this.btnValiderModifEtapeDvd.UseVisualStyleBackColor = true;
+            this.btnValiderModifEtapeDvd.Click += new System.EventHandler(this.btnValiderModifEtapeDvd_Click);
             // 
             // cbxEtapeSuiviDvd
             // 
@@ -2798,6 +2802,7 @@ namespace MediaTekDocuments.view
             this.btnSupprModifEtapeDvd.TabIndex = 67;
             this.btnSupprModifEtapeDvd.Text = "Supprimer la commande";
             this.btnSupprModifEtapeDvd.UseVisualStyleBackColor = true;
+            this.btnSupprModifEtapeDvd.Click += new System.EventHandler(this.btnSupprModifEtapeDvd_Click);
             // 
             // dgvCommandeDvd
             // 
@@ -2806,6 +2811,8 @@ namespace MediaTekDocuments.view
             this.dgvCommandeDvd.Name = "dgvCommandeDvd";
             this.dgvCommandeDvd.Size = new System.Drawing.Size(465, 169);
             this.dgvCommandeDvd.TabIndex = 66;
+            this.dgvCommandeDvd.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCommandeDvd_ColumnHeaderMouseClick);
+            this.dgvCommandeDvd.SelectionChanged += new System.EventHandler(this.dgvCommandeDvd_SelectionChanged_1);
             // 
             // label80
             // 
@@ -2852,6 +2859,7 @@ namespace MediaTekDocuments.view
             this.btnValiderCommandeDvd.TabIndex = 64;
             this.btnValiderCommandeDvd.Text = "Valider nouvelle commande";
             this.btnValiderCommandeDvd.UseVisualStyleBackColor = true;
+            this.btnValiderCommandeDvd.Click += new System.EventHandler(this.btnValiderCommandeDvd_Click);
             // 
             // txbNewNbExCommandeDvd
             // 
@@ -2963,7 +2971,7 @@ namespace MediaTekDocuments.view
             this.grpReceptionLivre.ResumeLayout(false);
             this.grpReceptionLivre.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandeLivre)).EndInit();
-            this.tabPage1.ResumeLayout(false);
+            this.tabCommandeDvd.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCommandeDvdImage)).EndInit();
@@ -3186,7 +3194,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Label label75;
         private System.Windows.Forms.ComboBox cbxEtapeSuivi;
         private System.Windows.Forms.Button btnValiderModifEtape;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabCommandeDvd;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.TextBox txbCommandeDvdDuree;
@@ -3207,7 +3215,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Label label83;
         private System.Windows.Forms.Label label84;
         private System.Windows.Forms.TextBox txbCommandeDvdNumero;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCommandeDvdRechercher;
         private System.Windows.Forms.Label label85;
         private System.Windows.Forms.Label label86;
         private System.Windows.Forms.Button btnValiderModifEtapeDvd;
