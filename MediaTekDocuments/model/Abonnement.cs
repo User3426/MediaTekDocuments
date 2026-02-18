@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MediaTekDocuments.model
 {
-    class Abonnement : Commande
+    public class Abonnement : Commande
     {
         public DateTime DateFinAbonnement { get; set; }
         public string IdRevue { get; set; }

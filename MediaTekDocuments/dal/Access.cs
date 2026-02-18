@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace MediaTekDocuments.dal
 {
@@ -175,7 +176,7 @@ namespace MediaTekDocuments.dal
         /// </summary>
         /// <param name="commande">objet CommandeDocument à supprimer</param>
         /// <returns>true si suppression réussie</returns>
-        public bool DelCommandeDocument(CommandeDocument commande)
+        public bool DelCommande(Commande commande)
         {
             String jsonIdCommande = JsonConvert.SerializeObject(new { id = commande.Id });
             try
@@ -224,6 +225,18 @@ namespace MediaTekDocuments.dal
             return lesExemplaires;
         }
 
+        /// <summary>
+        /// Récupère les abonnements d'une revue
+        /// </summary>
+        /// <param name="idRevue">id de la revue</param>
+        /// <returns>Liste des abonnements</returns>
+        public List<Abonnement> GetAbonnementsRevue(string idRevue)
+        {
+            String jsonIdRevue = convertToJson("id", idRevue);
+            List<Abonnement> lesAbonnements = TraitementRecup<Abonnement>(GET, "abonnement/" + jsonIdRevue, null);
+            return lesAbonnements;
+        }
+
         public List<CommandeDocument> GetCommandeLivre(string idDocument)
         {
             String jsonIdDocument = convertToJson("id", idDocument);
@@ -248,6 +261,28 @@ namespace MediaTekDocuments.dal
             {
                 Console.WriteLine(ex.Message);
             }
+            return false;
+        }
+
+        /// <summary>
+        /// Création d'un abonnement dans la base
+        /// </summary>
+        /// <param name="abonnement">objet Abonnement</param>
+        /// <returns>true si insertion réussie</returns>
+        public bool CreerAbonnement(Abonnement abonnement)
+        {
+            String jsonAbonnement = JsonConvert.SerializeObject(abonnement, new CustomDateTimeConverter());
+
+            try
+            {
+                List<Abonnement> liste = TraitementRecup<Abonnement>(POST, "abonnement", "champs=" + jsonAbonnement);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             return false;
         }
 
@@ -412,6 +447,7 @@ namespace MediaTekDocuments.dal
 
             return false;
         }
+
 
         /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)

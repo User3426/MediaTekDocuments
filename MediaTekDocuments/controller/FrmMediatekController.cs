@@ -197,9 +197,30 @@ namespace MediaTekDocuments.controller
             return access.CreerCommandeDocument(commande);
         }
 
-        public bool DelCommandeDocument(CommandeDocument commande)
+        public bool DelCommande(Commande commande)
         {
-            return access.DelCommandeDocument(commande);
+            return access.DelCommande(commande);
         }
+
+        /// <summary>
+        /// Récupère les abonnements d'une revue
+        /// </summary>
+        /// <param name="idRevue">id de la revue</param>
+        /// <returns>Liste des abonnements</returns>
+        public List<Abonnement> GetAbonnementsRevue(string idRevue)
+        {
+            return access.GetAbonnementsRevue(idRevue);
+        }
+
+        /// <summary>
+        /// Création d'un abonnement
+        /// </summary>
+        /// <param name="abonnement">objet Abonnement</param>
+        /// <returns>true si création réussie</returns>
+        public bool CreerAbonnement(Abonnement abonnement)
+        {
+            return access.CreerAbonnement(abonnement);
+        }
+
     }
 }
