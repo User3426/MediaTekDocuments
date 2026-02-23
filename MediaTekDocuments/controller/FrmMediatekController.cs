@@ -222,5 +222,13 @@ namespace MediaTekDocuments.controller
             return access.CreerAbonnement(abonnement);
         }
 
+        /// <summary>
+        /// Récupère les abonnements qui expirent dans moins de 30 jours
+        /// </summary>
+        public List<AbonnementAlerte> GetAbonnementsProcheFin()
+        {
+            return access.GetAbonnementsProcheFin();
+        }
+
     }
 }

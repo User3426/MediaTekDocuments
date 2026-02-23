@@ -2689,7 +2689,7 @@ namespace MediaTekDocuments.view
 
         #endregion
 
-        #region Onglet Livres
+        #region Onglet Abonnement
         private readonly BindingSource bdgAbonnements = new BindingSource();
         private List<Abonnement> lesAbonnements = new List<Abonnement>();
 
@@ -2950,5 +2950,18 @@ namespace MediaTekDocuments.view
 
         #endregion
 
+        private void FrmMediatek_Load(object sender, EventArgs e)
+        {
+            var resultats = controller.GetAbonnementsProcheFin();
+            if (resultats != null && resultats.Count > 0)
+            {
+                string message = "Abonnements se terminant dans moins de 30 jours :\n\n";
+                foreach (var ligne in resultats)
+                {
+                    message += $"{ligne.Titre} - {ligne.DateFinAbonnement:dd/MM/yyyy}\n";
+                }
+                MessageBox.Show(message, "Alerte abonnements", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

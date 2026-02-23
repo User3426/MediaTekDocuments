@@ -117,6 +117,16 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Récupère les abonnements qui expirent dans moins de 30 jours
+        /// </summary>
+        /// <returns>Liste des abonnements</returns>
+        public List<AbonnementAlerte> GetAbonnementsProcheFin()
+        {
+            List<AbonnementAlerte> lesAbonnements = TraitementRecup<AbonnementAlerte>(GET, "abonnementprochefin", null);
+            return lesAbonnements;
+        }
+
+        /// <summary>
         /// Supprime un livre de la bdd
         /// </summary>
         /// <param name="livre">livre à supprimer</param>
