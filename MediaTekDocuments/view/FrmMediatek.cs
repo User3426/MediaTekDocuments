@@ -20,14 +20,16 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgGenres = new BindingSource();
         private readonly BindingSource bdgPublics = new BindingSource();
         private readonly BindingSource bdgRayons = new BindingSource();
+        private readonly string nomService;
 
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
-        internal FrmMediatek()
+        internal FrmMediatek(string nomservice)
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
+            this.nomService = nomService;
         }
 
         /// <summary>

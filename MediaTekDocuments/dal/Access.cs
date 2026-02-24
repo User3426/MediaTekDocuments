@@ -541,5 +541,28 @@ namespace MediaTekDocuments.dal
             }
         }
 
+        /// <summary>
+        /// Vérifie les identifiants et retourne l'utilisateur avec son service, ou null
+        /// </summary>
+        public Utilisateur ControleAuthentification(Utilisateur utilisateur)
+        {
+            String json = JsonConvert.SerializeObject(new
+            {
+                login = utilisateur.Login,
+                pwd = utilisateur.Pwd
+            });
+            try
+            {
+                List<Utilisateur> liste = TraitementRecup<Utilisateur>(GET, "utilisateur", "champs=" + json);
+                if (liste != null && liste.Count > 0)
+                    return liste[0];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
+
     }
 }
