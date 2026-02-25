@@ -43,6 +43,7 @@
             this.btnConnect.TabIndex = 19;
             this.btnConnect.Text = "se connecter";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // label2
             // 
@@ -69,7 +70,7 @@
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.Size = new System.Drawing.Size(183, 20);
             this.txtPwd.TabIndex = 18;
-            this.txtPwd.Text = "Nolan";
+            this.txtPwd.Text = "admin";
             // 
             // txtLogin
             // 
@@ -77,7 +78,7 @@
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(183, 20);
             this.txtLogin.TabIndex = 14;
-            this.txtLogin.Text = "Nolan";
+            this.txtLogin.Text = "admin";
             // 
             // FrmAuthentification
             // 

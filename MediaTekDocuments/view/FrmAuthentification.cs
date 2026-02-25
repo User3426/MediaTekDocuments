@@ -23,7 +23,7 @@ namespace MediaTekDocuments.view
             controller = new FrmAuthentificationController();
         }
 
-        private void BtnConnexion_Click(object sender, EventArgs e)
+        private void btnConnect_Click(object sender, EventArgs e)
         {
             string login = txtLogin.Text;
             string pwd = txtPwd.Text;
@@ -35,7 +35,7 @@ namespace MediaTekDocuments.view
             }
 
             Utilisateur utilisateur = new Utilisateur(login, pwd);
-            Utilisateur result = controller.ControleAuthentification(utilisateur);  // stocké en Utilisateur, pas string
+            Utilisateur result = controller.ControleAuthentification(utilisateur);
 
             if (result == null)
             {
@@ -48,7 +48,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                FrmMediatek frm = new FrmMediatek(result.Service);  // nécessite modif dans FrmMediatek
+                FrmMediatek frm = new FrmMediatek(result.Service);
                 frm.ShowDialog();
             }
         }

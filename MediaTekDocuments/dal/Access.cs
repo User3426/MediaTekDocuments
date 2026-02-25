@@ -553,7 +553,7 @@ namespace MediaTekDocuments.dal
             });
             try
             {
-                List<Utilisateur> liste = TraitementRecup<Utilisateur>(GET, "utilisateur", "champs=" + json);
+                List<Utilisateur> liste = TraitementRecup<Utilisateur>(GET, "utilisateur/" + json, null);
                 if (liste != null && liste.Count > 0)
                     return liste[0];
             }
