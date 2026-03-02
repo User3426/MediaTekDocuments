@@ -29,7 +29,44 @@ namespace MediaTekDocuments.view
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
-            this.nomService = nomService;
+            this.nomService = nomservice;
+        }
+
+        private void FrmMediatek_Load(object sender, EventArgs e)
+        {
+            GestionAcces();
+            if (nomService == "Communication")
+            {
+                var resultats = controller.GetAbonnementsProcheFin();
+                if (resultats != null && resultats.Count > 0)
+                {
+                    string message = "Abonnements se terminant dans moins de 30 jours :\n\n";
+                    foreach (var ligne in resultats)
+                    {
+                        message += $"{ligne.Titre} - {ligne.DateFinAbonnement:dd/MM/yyyy}\n";
+                    }
+                    MessageBox.Show(message, "Alerte abonnements", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gère les accès aux onglets selon le service de l'utilisateur connecté
+        /// </summary>
+        private void GestionAcces()
+        {
+            switch (nomService)
+            {
+                case "Administratif":
+                case "Informatique":
+                    break;
+                case "Communication":
+                    tabOngletsApplication.TabPages.Remove(tabCommandeLivre);
+                    tabOngletsApplication.TabPages.Remove(tabCommandeDvd);
+                    tabOngletsApplication.TabPages.Remove(tabCommandeRevue);
+                    tabOngletsApplication.TabPages.Remove(tabReceptionRevue);
+                    break;
+            }
         }
 
         /// <summary>
@@ -2952,18 +2989,5 @@ namespace MediaTekDocuments.view
 
         #endregion
 
-        private void FrmMediatek_Load(object sender, EventArgs e)
-        {
-            var resultats = controller.GetAbonnementsProcheFin();
-            if (resultats != null && resultats.Count > 0)
-            {
-                string message = "Abonnements se terminant dans moins de 30 jours :\n\n";
-                foreach (var ligne in resultats)
-                {
-                    message += $"{ligne.Titre} - {ligne.DateFinAbonnement:dd/MM/yyyy}\n";
-                }
-                MessageBox.Show(message, "Alerte abonnements", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
     }
 }
