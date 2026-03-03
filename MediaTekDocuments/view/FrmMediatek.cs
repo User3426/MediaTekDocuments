@@ -35,7 +35,7 @@ namespace MediaTekDocuments.view
         private void FrmMediatek_Load(object sender, EventArgs e)
         {
             GestionAcces();
-            if (nomService == "Communication")
+            if (nomService == "Administratif")
             {
                 var resultats = controller.GetAbonnementsProcheFin();
                 if (resultats != null && resultats.Count > 0)
@@ -58,9 +58,8 @@ namespace MediaTekDocuments.view
             switch (nomService)
             {
                 case "Administratif":
-                case "Informatique":
                     break;
-                case "Communication":
+                case "Prêts":
                     tabOngletsApplication.TabPages.Remove(tabCommandeLivre);
                     tabOngletsApplication.TabPages.Remove(tabCommandeDvd);
                     tabOngletsApplication.TabPages.Remove(tabCommandeRevue);
