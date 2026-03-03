@@ -45,6 +45,10 @@ namespace MediaTekDocuments.dal
         /// méthode HTTP pour update
         private const string PUT = "PUT";
         /// <summary>
+        /// constante pour champs
+        /// </summary>
+        private const string CHAMPS = "champs=";
+        /// <summary>
         /// Méthode privée pour créer un singleton
         /// initialise l'accès à l'API
         /// </summary>
@@ -264,7 +268,7 @@ namespace MediaTekDocuments.dal
             String jsonExemplaire = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
             try
             {
-                List<Exemplaire> liste = TraitementRecup<Exemplaire>(POST, "exemplaire", "champs=" + jsonExemplaire);
+                List<Exemplaire> liste = TraitementRecup<Exemplaire>(POST, "exemplaire", CHAMPS + jsonExemplaire);
                 return (liste != null);
             }
             catch (Exception ex)
@@ -285,7 +289,7 @@ namespace MediaTekDocuments.dal
 
             try
             {
-                List<Abonnement> liste = TraitementRecup<Abonnement>(POST, "abonnement", "champs=" + jsonAbonnement);
+                List<Abonnement> liste = TraitementRecup<Abonnement>(POST, "abonnement", CHAMPS + jsonAbonnement);
                 return (liste != null);
             }
             catch (Exception ex)
@@ -306,7 +310,7 @@ namespace MediaTekDocuments.dal
             String jsonLivre = JsonConvert.SerializeObject(livre);
             try
             {
-                List<Livre> liste = TraitementRecup<Livre>(PUT, "livre/" + livre.Id, "champs=" + jsonLivre);
+                List<Livre> liste = TraitementRecup<Livre>(PUT, "livre/" + livre.Id, CHAMPS + jsonLivre);
 
                 return (liste != null);
             }
@@ -328,7 +332,7 @@ namespace MediaTekDocuments.dal
             try
             {
                 MessageBox.Show(jsonDvd, "JSON envoyé");
-                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "dvd/" + dvd.Id, "champs=" + jsonDvd);
+                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "dvd/" + dvd.Id, CHAMPS + jsonDvd);
 
                 return (liste != null);
             }
@@ -350,7 +354,7 @@ namespace MediaTekDocuments.dal
             try
             {
                 MessageBox.Show(jsonRevue, "JSON envoyé");
-                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "revue/" + revue.Id, "champs=" + jsonRevue);
+                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "revue/" + revue.Id, CHAMPS + jsonRevue);
 
                 return (liste != null);
             }
@@ -371,7 +375,7 @@ namespace MediaTekDocuments.dal
             String jsonCommande = JsonConvert.SerializeObject(commande);
             try
             {
-                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(PUT, "commandedocument/" + commande.Id, "champs=" + jsonCommande);
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(PUT, "commandedocument/" + commande.Id, CHAMPS + jsonCommande);
                 return (liste != null);
             }
             catch (Exception ex)
@@ -391,7 +395,7 @@ namespace MediaTekDocuments.dal
             String JsonLivre = JsonConvert.SerializeObject(livre);
             try
             {
-                List<Livre> liste = TraitementRecup<Livre>(POST, "livre", "champs=" + JsonLivre);
+                List<Livre> liste = TraitementRecup<Livre>(POST, "livre", CHAMPS + JsonLivre);
                 return (liste != null);
             }
             catch(Exception ex)
@@ -411,7 +415,7 @@ namespace MediaTekDocuments.dal
             String JsonDvd = JsonConvert.SerializeObject(dvd);
             try
             {
-                List<Dvd> liste = TraitementRecup<Dvd>(POST, "dvd", "champs=" + JsonDvd);
+                List<Dvd> liste = TraitementRecup<Dvd>(POST, "dvd", CHAMPS + JsonDvd);
                 return (liste != null);
             }
             catch(Exception ex)
@@ -426,7 +430,7 @@ namespace MediaTekDocuments.dal
             String JsonRevue = JsonConvert.SerializeObject(revue);
             try
             {
-                List<Revue> liste = TraitementRecup<Revue>(POST, "revue", "champs=" + JsonRevue);
+                List<Revue> liste = TraitementRecup<Revue>(POST, "revue", CHAMPS + JsonRevue);
                 return (liste != null);
             }
             catch (Exception ex)
@@ -447,7 +451,7 @@ namespace MediaTekDocuments.dal
 
             try
             {
-                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(POST, "commandedocument", "champs=" + jsonCommande);
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(POST, "commandedocument", CHAMPS + jsonCommande);
                 return (liste != null);
             }
             catch(Exception ex)
@@ -489,7 +493,7 @@ namespace MediaTekDocuments.dal
                 else
                 {
                     Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
-                    return null;
+                    return null; //NOSONAR
                 }
             }catch(Exception e)
             {
@@ -505,7 +509,7 @@ namespace MediaTekDocuments.dal
         /// <param name="nom"></param>
         /// <param name="valeur"></param>
         /// <returns>couple au format json</returns>
-        private String convertToJson(Object nom, Object valeur)
+        private static String convertToJson(Object nom, Object valeur)
         {
             Dictionary<Object, Object> dictionary = new Dictionary<Object, Object>();
             dictionary.Add(nom, valeur);
