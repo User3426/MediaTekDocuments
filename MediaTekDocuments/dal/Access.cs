@@ -353,14 +353,13 @@ namespace MediaTekDocuments.dal
             String jsonDvd = JsonConvert.SerializeObject(dvd);
             try
             {
-                MessageBox.Show(jsonDvd, "JSON envoyé");
                 List<Dvd> liste = TraitementRecup<Dvd>(PUT, "dvd/" + dvd.Id, CHAMPS + jsonDvd);
 
                 return (liste != null);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur UpdateLivre : " + e.Message);
+                Console.WriteLine("Erreur UpdateDvd : " + e.Message);
                 Log.Error("Access.UpdateDvd erreur={0}", e.Message);
                 return false;
             }
@@ -376,14 +375,13 @@ namespace MediaTekDocuments.dal
             String jsonRevue = JsonConvert.SerializeObject(revue);
             try
             {
-                MessageBox.Show(jsonRevue, "JSON envoyé");
-                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "revue/" + revue.Id, CHAMPS + jsonRevue);
+                List<Revue> liste = TraitementRecup<Revue>(PUT, "revue/" + revue.Id, CHAMPS + jsonRevue);
 
                 return (liste != null);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur UpdateLivre : " + e.Message);
+                Console.WriteLine("Erreur UpdateRevue : " + e.Message);
                 Log.Error("Access.UpdateRevue erreur={0}", e.Message);
                 return false;
             }
@@ -507,7 +505,6 @@ namespace MediaTekDocuments.dal
         /// <returns>liste d'objets récupérés (ou liste vide)</returns>
         private List<T> TraitementRecup<T> (String methode, String message, String parametres)
         {
-            // trans
             List<T> liste = new List<T>();
             try
             {
