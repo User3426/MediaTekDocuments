@@ -19,10 +19,6 @@ namespace MediaTekDocuments.dal
     public class Access
     {
         /// <summary>
-        /// adresse de l'API
-        /// </summary>
-        private static readonly string uriApi = "http://localhost/rest_mediatekdocuments/";
-        /// <summary>
         /// instance unique de la classe
         /// </summary>
         private static Access instance = null;
@@ -43,7 +39,8 @@ namespace MediaTekDocuments.dal
         /// </summary>
         private const string DELETE = "DELETE";
         /// <summary>
-        /// méthode HTTP pour update
+        /// Méthode HTTP pour update
+        /// </summary>
         private const string PUT = "PUT";
         /// <summary>
         /// constante pour champs
@@ -64,6 +61,7 @@ namespace MediaTekDocuments.dal
                     .WriteTo.File("logs/log.txt")
                     .CreateLogger();
                 authenticationString = ConfigurationManager.AppSettings["authenticationString"];
+                string uriApi = ConfigurationManager.AppSettings["uriApi"];
                 api = ApiRest.GetInstance(uriApi, authenticationString);
             }
             catch (Exception e)
@@ -141,7 +139,7 @@ namespace MediaTekDocuments.dal
         /// Supprime un livre de la bdd
         /// </summary>
         /// <param name="livre">livre à supprimer</param>
-        /// <returns></returns>
+        /// <returns>true si la suppression a réussi</returns>
         public bool DeleteLivre(Livre livre)
         {
             try
@@ -161,8 +159,8 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// supprime un dvd de la bdd
         /// </summary>
-        /// <param name="dvd"></param>
-        /// <returns></returns>
+        /// <param name="dvd">dvd à supprimer</param>
+        /// <returns>true si la suppression a réussi</returns>
         public bool DeleteDvd(Dvd dvd)
         {
             try
@@ -179,6 +177,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// supprime une revue de la bdd
+        /// </summary>
+        /// <param name="revue">objet Revue à supprimer</param>
+        /// <returns>true si la suppression à réussi</returns>
         public bool DelRevue(Revue revue)
         {
             try
@@ -262,6 +265,11 @@ namespace MediaTekDocuments.dal
             return lesAbonnements;
         }
 
+        /// <summary>
+        /// Retourne les commandes associées à un livre ou DVD
+        /// </summary>
+        /// <param name="idDocument">id du document concerné</param>
+        /// <returns>Liste d'objets CommandeDocument</returns>
         public List<CommandeDocument> GetCommandeLivre(string idDocument)
         {
             String jsonIdDocument = convertToJson("id", idDocument);
@@ -316,7 +324,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modifie un livre de la bdd
         /// </summary>
-        /// <param name="livre"></param>
+        /// <param name="livre">livre à modifier</param>
         /// <returns>true si la modification a pu se faire</returns>
         public bool UpdateLivre(Livre livre)
         {
@@ -336,9 +344,9 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// Modifie un livre de la bdd
+        /// Modifie un dvd de la bdd
         /// </summary>
-        /// <param name="livre"></param>
+        /// <param name="dvd">dvd à modifier</param>
         /// <returns>true si la modification a pu se faire</returns>
         public bool UpdateDvd(Dvd dvd)
         {
@@ -361,7 +369,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modifie une revue de la bdd
         /// </summary>
-        /// <param name="livre"></param>
+        /// <param name="revue">revue à modifier</param>
         /// <returns>true si la modification a pu se faire</returns>
         public bool UpdateRevue(Revue revue)
         {
@@ -444,6 +452,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// Créer une revue dans la BDD
+        /// </summary>
+        /// <param name="revue">objet revue à insérer</param>
+        /// <returns>true si l'insertion à réussi</returns>
         public bool CreerRevue(Revue revue)
         {
             String JsonRevue = JsonConvert.SerializeObject(revue);
@@ -529,8 +542,8 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Convertit en json un couple nom/valeur
         /// </summary>
-        /// <param name="nom"></param>
-        /// <param name="valeur"></param>
+        /// <param name="nom">nom du champs</param>
+        /// <param name="valeur">valeur du chammps</param>
         /// <returns>couple au format json</returns>
         private static String convertToJson(Object nom, Object valeur)
         {
@@ -571,6 +584,8 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Vérifie les identifiants et retourne l'utilisateur avec son service, ou null
         /// </summary>
+        /// <param name="utilisateur">objet Utilisateur contenant le login et le mot de passe</param>
+        /// <returns>objet Utilisateur avec son service si authentification réussie, null sinon</returns>
         public Utilisateur ControleAuthentification(Utilisateur utilisateur)
         {
             String json = JsonConvert.SerializeObject(new

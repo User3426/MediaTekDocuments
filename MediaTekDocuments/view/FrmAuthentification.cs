@@ -13,16 +13,30 @@ using System.Windows.Forms;
 
 namespace MediaTekDocuments.view
 {
+    /// <summary>
+    /// Formulaire de connexion permettant à l'utilisateur de s'authentifier
+    /// </summary>
     public partial class FrmAuthentification: Form
     {
+        /// <summary>
+        /// Contrôleur lié à ce formulaire
+        /// </summary>
         private FrmAuthentificationController controller;
 
+        /// <summary>
+        /// Constructeur : initialise le formulaire et crée le contrôleur associé
+        /// </summary>
         public FrmAuthentification()
         {
             InitializeComponent();
             controller = new FrmAuthentificationController();
         }
 
+        /// <summary>
+        /// Bouton pour se connecter, vérifie login et password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConnect_Click(object sender, EventArgs e)
         {
             string login = txtLogin.Text;

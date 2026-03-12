@@ -155,23 +155,38 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// ajoute un dvd dans la bdd 
         /// </summary>
-        /// <param name="dvd"></param>
-        /// <returns></returns>
+        /// <param name="dvd">objet Dvd à insérer</param>
+        /// <returns>true si l'insertion a réussi</returns>
         public bool CreerDvd(Dvd dvd)
         {
             return access.CreerDvd(dvd);
         }
 
+        /// <summary>
+        /// Supprime une revue de la BDD
+        /// </summary>
+        /// <param name="revue">objet Revue à supprimer</param>
+        /// <returns>true si la suppression a réussi</returns>
         public bool DelRevue(Revue revue)
         {
             return access.DelRevue(revue);
         }
 
+        /// <summary>
+        /// Crée une revue dans la BDD
+        /// </summary>
+        /// <param name="revue">objet Revue à insérer</param>
+        /// <returns>true si l'insertion a réussi</returns>
         public bool CreerRevue(Revue revue)
         {
             return access.CreerRevue(revue);
         }
 
+        /// <summary>
+        /// Modifie une revue dans la BDD
+        /// </summary>
+        /// <param name="revue">objet revue avec les nouvelles valeurs</param>
+        /// <returns>true si l'update a réussi</returns>
         public bool UpdateRevue(Revue revue)
         {
             return access.UpdateRevue(revue);
@@ -197,6 +212,11 @@ namespace MediaTekDocuments.controller
             return access.CreerCommandeDocument(commande);
         }
 
+        /// <summary>
+        /// Supprime une commande de la BDD
+        /// </summary>
+        /// <param name="commande">objet commande à supprimer</param>
+        /// <returns>true si la suppression a réussi</returns>
         public bool DelCommande(Commande commande)
         {
             return access.DelCommande(commande);
@@ -223,8 +243,9 @@ namespace MediaTekDocuments.controller
         }
 
         /// <summary>
-        /// Récupère les abonnements qui expirent dans moins de 30 jours
+        /// Récupère les abonnement qui expirent dans moins de 30 jours
         /// </summary>
+        /// <returns>liste d'objets AbonnementAlerte</returns>
         public List<AbonnementAlerte> GetAbonnementsProcheFin()
         {
             return access.GetAbonnementsProcheFin();

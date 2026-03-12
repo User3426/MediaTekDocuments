@@ -16,6 +16,18 @@ namespace MediaTekDocuments.model
         public string IdRayon { get; }
         public string Rayon { get; }
 
+        /// <summary>
+        /// Constructeur : initialise les informations communes à tous les documents
+        /// </summary>
+        /// <param name="id">identifiant unique du document</param>
+        /// <param name="titre">titre du document</param>
+        /// <param name="image">chemin vers l'image du document</param>
+        /// <param name="idGenre">identifiant du genre</param>
+        /// <param name="genre">libellé du genre</param>
+        /// <param name="idPublic">identifiant du public cible</param>
+        /// <param name="lePublic">libellé du public cible</param>
+        /// <param name="idRayon">identifiant du rayon</param>
+        /// <param name="rayon">llibellé du rayon</param>
         public Document(string id, string titre, string image, string idGenre, string genre, string idPublic, string lePublic, string idRayon, string rayon)
         {
             Id = id;

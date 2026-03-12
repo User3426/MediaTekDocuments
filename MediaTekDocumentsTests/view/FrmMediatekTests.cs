@@ -12,12 +12,6 @@ namespace MediaTekDocuments.view.Tests
     public class FrmMediatekTests
     {
         [TestMethod()]
-        public void RemplirComboCategorieTest()
-        {
-
-        }
-
-        [TestMethod()]
         public void ParutionDansAbonnementTest()
         {
             DateTime dateCommande = new DateTime(2023, 1, 1);
