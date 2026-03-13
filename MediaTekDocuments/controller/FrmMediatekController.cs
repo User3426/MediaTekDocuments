@@ -87,6 +87,11 @@ namespace MediaTekDocuments.controller
             return access.GetExemplairesRevue(idDocuement);
         }
 
+        /// <summary>
+        /// récupère les commandes d'un document
+        /// </summary>
+        /// <param name="idDocument">identifiant du document concerné</param>
+        /// <returns>Liste d'objet CommandeDocument</returns>
         public List<CommandeDocument> GetCommandesLivre(string idDocument)
         {
             return access.GetCommandeLivre(idDocument);
