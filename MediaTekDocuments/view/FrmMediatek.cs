@@ -79,6 +79,17 @@ namespace MediaTekDocuments.view
                     tabOngletsApplication.TabPages.Remove(tabCommandeDvd);
                     tabOngletsApplication.TabPages.Remove(tabCommandeRevue);
                     tabOngletsApplication.TabPages.Remove(tabReceptionRevue);
+                    btnAjouterLivre.Visible = false;
+                    btnDemandeModifLivre.Visible = false;
+                    btnSupprLivre.Visible = false;
+
+                    btnAjouterDvd.Visible = false;
+                    btnModifDvd.Visible = false;
+                    btnSupprDvd.Visible = false;
+
+                    btnAjouterRevue.Visible = false;
+                    btnModifRevue.Visible = false;
+                    btnSupprRevue.Visible = false;
                     break;
             }
         }
