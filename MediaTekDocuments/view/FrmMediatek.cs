@@ -2623,23 +2623,6 @@ namespace MediaTekDocuments.view
             RemplirCommandesDvdListe(sortedList);
         }
 
-        /// <summary>
-        /// Sélection d'une commande dans le datagridview : remplit la combobox des suivis autorisés
-        /// </summary>
-        private void dgvCommandeDvd_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvCommandeDvd.SelectedRows.Count > 0)
-            {
-                CommandeDocument commande = (CommandeDocument)bdgCommandesDvd.List[bdgCommandesDvd.Position];
-                RemplirCbxEtapeSuiviDvd(commande);
-                btnValiderModifEtapeDvd.Enabled = (cbxEtapeSuiviDvd.Items.Count > 0);
-            }
-            else
-            {
-                cbxEtapeSuiviDvd.Items.Clear();
-                btnValiderModifEtapeDvd.Enabled = false;
-            }
-        }
 
         /// <summary>
         /// Remplit la combobox avec les étapes de suivi autorisées pour la commande sélectionnée
@@ -2672,26 +2655,6 @@ namespace MediaTekDocuments.view
 
             if (cbxEtapeSuiviDvd.Items.Count > 0)
                 cbxEtapeSuiviDvd.SelectedIndex = 0;
-        }
-
-        /// <summary>
-        /// Sélection d'une commande dans le datagridview : remplit la combobox des suivis autorisés
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgvCommandeDvd_SelectionChanged_1(object sender, EventArgs e)
-        {
-            if (dgvCommandeDvd.SelectedRows.Count > 0)
-            {
-                CommandeDocument commande = (CommandeDocument)bdgCommandesDvd.List[bdgCommandesDvd.Position];
-                RemplirCbxEtapeSuiviDvd(commande);
-                btnValiderModifEtapeDvd.Enabled = (cbxEtapeSuiviDvd.Items.Count > 0);
-            }
-            else
-            {
-                cbxEtapeSuiviDvd.Items.Clear();
-                btnValiderModifEtapeDvd.Enabled = false;
-            }
         }
 
         /// <summary>
@@ -2783,9 +2746,7 @@ namespace MediaTekDocuments.view
         /// <param name="e"></param>
         private void btnValiderCommandeDvd_Click(object sender, EventArgs e)
         {
-            if (txbNumNewCommandeDvd.Text == "" ||
-        txbNewMontantCommandeDvd.Text == "" ||
-        txbNewNbExCommandeDvd.Text == "")
+            if (txbNumNewCommandeDvd.Text == "" || txbNewMontantCommandeDvd.Text == "" || txbNewNbExCommandeDvd.Text == "")
             {
                 MessageBox.Show("Tous les champs sont obligatoires", TITRE_INFORMATION);
                 return;
@@ -2820,6 +2781,24 @@ namespace MediaTekDocuments.view
             catch
             {
                 MessageBox.Show("Vérifiez les données saisies (montant et nombre d'exemplaires doivent être numériques)", MESSAGE_ERREUR);
+            }
+        }
+
+        /// <summary>
+        /// Sélection d'une commande dans le datagridview : remplit la combobox des suivis autorisés
+        /// </summary>
+        private void dgvCommandeDvd_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvCommandeDvd.SelectedRows.Count > 0)
+            {
+                CommandeDocument commande = (CommandeDocument)bdgCommandesDvd.List[bdgCommandesDvd.Position];
+                RemplirCbxEtapeSuiviDvd(commande);
+                btnValiderModifEtapeDvd.Enabled = (cbxEtapeSuiviDvd.Items.Count > 0);
+            }
+            else
+            {
+                cbxEtapeSuiviDvd.Items.Clear();
+                btnValiderModifEtapeDvd.Enabled = false;
             }
         }
 

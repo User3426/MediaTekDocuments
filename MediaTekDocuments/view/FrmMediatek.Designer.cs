@@ -290,6 +290,7 @@ namespace MediaTekDocuments.view
             this.label93 = new System.Windows.Forms.Label();
             this.label94 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnSupprimerAbonnement = new System.Windows.Forms.Button();
             this.label96 = new System.Windows.Forms.Label();
             this.label97 = new System.Windows.Forms.Label();
             this.dgvCommandeRevue = new System.Windows.Forms.DataGridView();
@@ -311,7 +312,6 @@ namespace MediaTekDocuments.view
             this.label104 = new System.Windows.Forms.Label();
             this.label105 = new System.Windows.Forms.Label();
             this.btnCommandeRevueRechercher = new System.Windows.Forms.Button();
-            this.btnSupprimerAbonnement = new System.Windows.Forms.Button();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -2759,7 +2759,7 @@ namespace MediaTekDocuments.view
             this.dgvCommandeDvd.Size = new System.Drawing.Size(465, 169);
             this.dgvCommandeDvd.TabIndex = 66;
             this.dgvCommandeDvd.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCommandeDvd_ColumnHeaderMouseClick);
-            this.dgvCommandeDvd.SelectionChanged += new System.EventHandler(this.dgvCommandeDvd_SelectionChanged_1);
+            this.dgvCommandeDvd.SelectionChanged += new System.EventHandler(this.dgvCommandeDvd_SelectionChanged);
             // 
             // label80
             // 
@@ -3104,6 +3104,16 @@ namespace MediaTekDocuments.view
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Recherche revue";
             // 
+            // btnSupprimerAbonnement
+            // 
+            this.btnSupprimerAbonnement.Location = new System.Drawing.Point(439, 369);
+            this.btnSupprimerAbonnement.Name = "btnSupprimerAbonnement";
+            this.btnSupprimerAbonnement.Size = new System.Drawing.Size(102, 24);
+            this.btnSupprimerAbonnement.TabIndex = 56;
+            this.btnSupprimerAbonnement.Text = "supprimer abonnement";
+            this.btnSupprimerAbonnement.UseVisualStyleBackColor = true;
+            this.btnSupprimerAbonnement.Click += new System.EventHandler(this.btnSupprimerAbonnement_Click);
+            // 
             // label96
             // 
             this.label96.AutoSize = true;
@@ -3305,16 +3315,6 @@ namespace MediaTekDocuments.view
             this.btnCommandeRevueRechercher.Text = "Rechercher";
             this.btnCommandeRevueRechercher.UseVisualStyleBackColor = true;
             this.btnCommandeRevueRechercher.Click += new System.EventHandler(this.btnCommandeRevueRechercher_Click);
-            // 
-            // btnSupprimerAbonnement
-            // 
-            this.btnSupprimerAbonnement.Location = new System.Drawing.Point(439, 369);
-            this.btnSupprimerAbonnement.Name = "btnSupprimerAbonnement";
-            this.btnSupprimerAbonnement.Size = new System.Drawing.Size(102, 24);
-            this.btnSupprimerAbonnement.TabIndex = 56;
-            this.btnSupprimerAbonnement.Text = "supprimer abonnement";
-            this.btnSupprimerAbonnement.UseVisualStyleBackColor = true;
-            this.btnSupprimerAbonnement.Click += new System.EventHandler(this.btnSupprimerAbonnement_Click);
             // 
             // FrmMediatek
             // 
