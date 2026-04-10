@@ -2785,7 +2785,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Sélection d'une commande dans le datagridview : remplit la combobox des suivis autoriséss
+        /// Sélection d'une commande dans le datagridview : remplit la combobox des suivis autorisés
         /// </summary>
         private void dgvCommandeDvd_SelectionChanged(object sender, EventArgs e)
         {
