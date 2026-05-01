@@ -1,77 +1,97 @@
-# MediatekDocuments
-Cette application permet de gérer les documents (livres, DVD, revues) d'une médiathèque. Elle a été codée en C# sous Visual Studio 2019. C'est une application de bureau, prévue d'être installée sur plusieurs postes accédant à la même base de données.<br>
-L'application exploite une API REST pour accéder à la BDD MySQL. Des explications sont données plus loin, ainsi que le lien de récupération.
-## Présentation
-Actuellement l'application est partiellement codée. Voici les fonctionnalités actuellement opérationnelles : recherches et affichage d'informations sur les documents de la médiathèque (livres, DVD, revues), réception de nouveaux numéros de revues.<br>
-![img1](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/9b5a4c1b-6914-4455-94bf-fec24adba3ec)
-<br>L'application ne comporte qu'une seule fenêtre divisée en plusieurs onglets.
-## Les différents onglets
-### Onglet 1 : Livres
-Cet onglet présente la liste des livres, triée par défaut sur le titre.<br>
-La liste comporte les informations suivantes : titre, auteur, collection, genre, public, rayon.
-![img2](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/e3f31979-cf24-416d-afb1-a588356e8966)
-#### Recherches
-<strong>Par le titre :</strong> Il est possible de rechercher un ou plusieurs livres par le titre. La saisie dans la zone de recherche se fait en autocomplétions sans tenir compte de la casse. Seuls les livres concernés apparaissent dans la liste.<br>
-<strong>Par le numéro :</strong> il est possible de saisir un numéro et, en cliquant sur "Rechercher", seul le livre concerné apparait dans la liste (ou un message d'erreur si le livre n'est pas trouvé, avec la liste remplie à nouveau).
-#### Filtres
-Il est possible d'appliquer un filtre (un seul à la fois) sur une de ces 3 catégories : genre, public, rayon.<br>
-Un combo par catégorie permet de sélectionner un item. Seuls les livres correspondant à l'item sélectionné, apparaissent dans la liste (par exemple, en choisissant le genre "Policier", seuls les livres de genre "Policier" apparaissent).<br>
-Le fait de sélectionner un autre filtre ou de faire une recherche, annule le filtre actuel.<br>
-Il est possible aussi d'annuler le filtre en cliquant sur une des croix.
-#### Tris
-Le fait de cliquer sur le titre d'une des colonnes de la liste des livres, permet de trier la liste par rapport à la colonne choisie.
-#### Affichage des informations détaillées
-Si la liste des livres contient des éléments, par défaut il y en a toujours un de sélectionné. Il est aussi possible de sélectionner une ligne (donc un livre) en cliquant n'importe où sur la ligne.<br>
-La partie basse de la fenêtre affiche les informations détaillées du livre sélectionné (numéro de document, code ISBN, titre, auteur(e), collection, genre, public, rayon, chemin de l'image) ainsi que l'image.
-### Onglet 2 : DVD
-Cet onglet présente la liste des DVD, triée par titre.<br>
-La liste comporte les informations suivantes : titre, durée, réalisateur, genre, public, rayon.<br>
-Le fonctionnement est identique à l'onglet des livres.<br>
-La seule différence réside dans certaines informations détaillées, spécifiques aux DVD : durée (à la place de ISBN), réalisateur (à la place de l'auteur), synopsis (à la place de collection).
-### Onglet 3 : Revues
-Cet onglet présente la liste des revues, triées par titre.<br>
-La liste comporte les informations suivantes : titre, périodicité, délai mise à dispo, genre, public, rayon.<br>
-Le fonctionnement est identique à l'onglet des livres.<br>
-La seule différence réside dans certaines informations détaillées, spécifiques aux revues : périodicité (à la place de l'auteur), délai mise à dispo (à la place de collection).
-### Onglet 4 : Parutions des revues
-Cet onglet permet d'enregistrer la réception de nouvelles parutions d'une revue.<br>
-Il se décompose en 2 parties (groupbox).
-#### Partie "Recherche revue"
-Cette partie permet, à partir de la saisie d'un numéro de revue (puis en cliquant sur le bouton "Rechercher"), d'afficher toutes les informations de la revue (comme dans l'onglet précédent), ainsi que son image principale en petit, avec en plus la liste des parutions déjà reçues (numéro, date achat, chemin photo). Sur la sélection d'une ligne dans la liste des parutions, la photo de la parution correspondante s'affiche à droite.<br>
-Dès qu'un numéro de revue est reconnu et ses informations affichées, la seconde partie ("Nouvelle parution réceptionnée pour cette revue") devient accessible.<br>
-Si une modification est apportée au numéro de la revue, toutes les zones sont réinitialisées et la seconde partie est rendue inaccessible, tant que le bouton "Rechercher" n'est pas utilisé.
-#### Partie "Nouvelle parution réceptionnée pour cette revue"
-Cette partie n'est accessible que si une revue a bien été trouvée dans la première partie.<br>
-Il est possible alors de réceptionner une nouvelle parution en saisissant son numéro, en sélectionnant une date (date du jour proposée par défaut) et en cherchant l'image correspondante (optionnel) qui doit alors s'afficher à droite.<br>
-Le clic sur "Valider la réception" va permettre d'ajouter un tuple dans la table Exemplaire de la BDD. La parution correspondante apparaitra alors automatiquement dans la liste des parutions et les zones de la partie "Nouvelle parution réceptionnée pour cette revue" seront réinitialisées.<br>
-Si le numéro de la parution existe déjà, il n’est pas ajouté et un message est affiché.
-![img3](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/225e10f2-406a-4b5e-bfa9-368d45456056)
-## La base de données
-La base de données 'mediatek86 ' est au format MySQL.<br>
-Voici sa structure :<br>
-![img4](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/4314f083-ec8b-4d27-9746-fecd1387d77b)
-<br>On distingue les documents "génériques" (ce sont les entités Document, Revue, Livres-DVD, Livre et DVD) des documents "physiques" qui sont les exemplaires de livres ou de DVD, ou bien les numéros d’une revue ou d’un journal.<br>
-Chaque exemplaire est numéroté à l’intérieur du document correspondant, et a donc un identifiant relatif. Cet identifiant est réel : ce n'est pas un numéro automatique. <br>
-Un exemplaire est caractérisé par :<br>
-. un état d’usure, les différents états étant mémorisés dans la table Etat ;<br>
-. sa date d’achat ou de parution dans le cas d’une revue ;<br>
-. un lien vers le fichier contenant sa photo de couverture de l'exemplaire, renseigné uniquement pour les exemplaires des revues, donc les parutions (chemin complet) ;
+<h1>MediaTekDocuments – Fonctionnalités ajoutées</h1>
+
+Ce dépôt est une extension du dépôt d'origine disponible ici :<br>
+<a href="https://github.com/CNED-SLAM/MediaTekDocuments">https://github.com/CNED-SLAM/MediaTekDocuments</a><br>
+Le readme de ce dépôt présente l'application d'origine, son architecture et les fonctionnalités de base déjà implémentées.<br>
 <br>
-Un document a un titre (titre de livre, titre de DVD ou titre de la revue), concerne une catégorie de public, possède un genre et est entreposé dans un rayon défini. Les genres, les catégories de public et les rayons sont gérés dans la base de données. Un document possède aussi une image dont le chemin complet est mémorisé. Même les revues peuvent avoir une image générique, en plus des photos liées à chaque exemplaire (parution).<br>
-Une revue est un document, d’où le lien de spécialisation entre les 2 entités. Une revue est donc identifiée par son numéro de document. Elle a une périodicité (quotidien, hebdomadaire, etc.) et un délai de mise à disposition (temps pendant lequel chaque exemplaire est laissé en consultation). Chaque parution (exemplaire) d'une revue n'est disponible qu'en un seul "exemplaire".<br>
-Un livre a aussi pour identifiant son numéro de document, possède un code ISBN, un auteur et peut faire partie d’une collection. Les auteurs et les collections ne sont pas gérés dans des tables séparées (ce sont de simples champs textes dans la table Livre).<br>
-De même, un DVD est aussi identifié par son numéro de document, et possède un synopsis, un réalisateur et une durée. Les réalisateurs ne sont pas gérés dans une table séparée (c’est un simple champ texte dans la table DVD).
-Enfin, 3 tables permettent de mémoriser les données concernant les commandes de livres ou DVD et les abonnements. Une commande est effectuée à une date pour un certain montant. Un abonnement est une commande qui a pour propriété complémentaire la date de fin de l’abonnement : il concerne une revue.  Une commande de livre ou DVD a comme caractéristique le nombre d’exemplaires commandé et concerne donc un livre ou un DVD.<br>
+L'API REST nécessaire au fonctionnement de cette application est disponible ici :<br>
+<a href="https://github.com/User3426/rest_mediatekdocuments">https://github.com/User3426/rest_mediatekdocuments</a><br>
+
+<h1>Présentation des fonctionnalités ajoutées</h1>
+
+<h2>Authentification et gestion des droits</h2>
+Un formulaire de connexion a été ajouté comme point d'entrée de l'application. L'utilisateur doit saisir son login et son mot de passe, qui sont vérifiés via l'API REST (table <em>utilisateur</em> côté BDD).<br>
 <br>
-La base de données est remplie de quelques exemples pour pouvoir tester son application. Dans les champs image (de Document) et photo (de Exemplaire) doit normalement se trouver le chemin complet vers l'image correspondante. Pour les tests, vous devrez créer un dossier, le remplir de quelques images et mettre directement les chemins dans certains tuples de la base de données qui, pour le moment, ne contient aucune image.<br>
-Lorsque l'application sera opérationnelle, c'est le personnel de la médiathèque qui sera en charge de saisir les informations des documents.
-## L'API REST
-L'accès à la BDD se fait à travers une API REST protégée par une authentification basique.<br>
-Le code de l'API se trouve ici :<br>
-https://github.com/CNED-SLAM/rest_mediatekdocuments<br>
-avec toutes les explications pour l'utiliser (dans le readme).
-## Installation de l'application
-Ce mode opératoire permet d'installer l'application pour pouvoir travailler dessus.<br>
-- Installer Visual Studio 2019 entreprise et les extension Specflow et newtonsoft.json (pour ce dernier, voir l'article "Accéder à une API REST à partir d'une application C#" dans le wiki de ce dépôt : consulter juste le début pour la configuration, car la suite permet de comprendre le code existant).<br>
-- Télécharger le code et le dézipper puis renommer le dossier en "mediatekdocuments".<br>
-- Récupérer et installer l'API REST nécessaire (https://github.com/CNED-SLAM/rest_mediatekdocuments) ainsi que la base de données (les explications sont données dans le readme correspondant).
+Selon le service auquel appartient l'utilisateur connecté, l'accès aux onglets est restreint :<br>
+<ul>
+  <li><strong>Service "Administratif"</strong> : accès complet à tous les onglets, y compris les commandes et abonnements.</li>
+  <li><strong>Service "Prêts"</strong> : accès limité aux onglets Livres, DVD, Revues et Parutions des revues. Les onglets de commandes et d'abonnements sont masqués.</li>
+  <li><strong>Service "Culture"</strong> : accès refusé, l'application se ferme après un message d'information.</li>
+</ul>
+<img width="262" height="119" alt="image" src="https://github.com/user-attachments/assets/b13a4098-0bef-47b0-be81-8f0c8d5bc3e0" />
+<br>
+<h2>Gestion des livres</h2>
+En plus de la consultation existante, il est désormais possible de :<br>
+<ul>
+  <li><strong>Ajouter</strong> un nouveau livre en renseignant son numéro, titre, auteur, ISBN, collection, image, genre, public et rayon.</li>
+  <li><strong>Modifier</strong> un livre sélectionné dans la liste : les champs deviennent éditables et les catégories (genre, public, rayon) sont modifiables via des listes déroulantes.</li>
+  <li><strong>Supprimer</strong> un livre, sous réserve qu'aucun exemplaire ni aucune commande ne lui soit rattaché (contrôle effectué côté BDD).</li>
+</ul>
+<img width="877" height="712" alt="image" src="https://github.com/user-attachments/assets/68e050c0-9558-45dc-9ff8-f07497775b55" />
+
+
+<h2>Gestion des DVD</h2>
+Fonctionnement identique à la gestion des livres :<br>
+<ul>
+  <li>Ajout d'un nouveau DVD (titre, réalisateur, durée, synopsis, image, genre, public, rayon).</li>
+  <li>Modification d'un DVD existant.</li>
+  <li>Suppression d'un DVD, sous réserve d'absence d'exemplaires ou de commandes liés.</li>
+</ul>
+<img width="875" height="734" alt="image" src="https://github.com/user-attachments/assets/ca6e1b1f-fb3d-4614-836a-bbd228214c81" />
+
+<h2>Gestion des revues</h2>
+Fonctionnement identique, adapté aux spécificités des revues :<br>
+<ul>
+  <li>Ajout d'une nouvelle revue (titre, périodicité, délai de mise à disposition, image, genre, public, rayon).</li>
+  <li>Modification d'une revue existante.</li>
+  <li>Suppression d'une revue, sous réserve d'absence d'exemplaires liés.</li>
+</ul>
+<img width="874" height="720" alt="image" src="https://github.com/user-attachments/assets/19cc1e70-c16a-4bf7-bf8c-b463ce05481d" />
+
+<h2>Onglet Commandes livres</h2>
+Un nouvel onglet permet de gérer les commandes de livres :<br>
+<ul>
+  <li>Recherche d'un livre par son numéro pour afficher ses informations et la liste de ses commandes associées.</li>
+  <li>Ajout d'une nouvelle commande (numéro, date, montant, nombre d'exemplaires).</li>
+  <li>Modification de l'étape de suivi d'une commande sélectionnée, selon le workflow autorisé : <em>en cours → relancée → livrée → réglée</em>.</li>
+  <li>Suppression d'une commande, impossible si elle est déjà à l'état "livrée".</li>
+</ul>
+<img width="877" height="786" alt="image" src="https://github.com/user-attachments/assets/7695a3ac-f34c-4d81-8024-332699972aa1" />
+
+
+<h2>Onglet Commandes DVD</h2>
+Fonctionnement identique à l'onglet Commandes livres, appliqué aux DVD.
+<img width="881" height="788" alt="image" src="https://github.com/user-attachments/assets/941d26ff-f79c-464b-b35a-93b0b9414e54" />
+
+
+<h2>Onglet Commandes revues (abonnements)</h2>
+Un onglet dédié permet de gérer les abonnements aux revues :<br>
+<ul>
+  <li>Recherche d'une revue par son numéro pour afficher ses informations et ses abonnements existants.</li>
+  <li>Création d'un nouvel abonnement (numéro, date de commande, montant, date de fin d'abonnement).</li>
+  <li>Suppression d'un abonnement, impossible si des parutions (exemplaires) y sont rattachées (vérification par comparaison des dates).</li>
+</ul>
+<img width="877" height="683" alt="image" src="https://github.com/user-attachments/assets/4cce6561-d570-4704-8d35-81dec2b3cac6" />
+
+
+<h2>Alerte abonnements proches de l'expiration</h2>
+Au chargement de l'application, si l'utilisateur appartient au service "Administratif", une fenêtre d'alerte s'affiche automatiquement listant les abonnements dont la date de fin est dans moins de 30 jours.<br>
+<img width="465" height="203" alt="image" src="https://github.com/user-attachments/assets/b88dcbc2-8426-43bb-96ef-c620b27315f6" />
+
+
+<h1>Installation et configuration en local</h1>
+
+<ul>
+  <li>Installer <strong>Visual Studio 2019</strong> (ou version ultérieure) avec le support .NET Framework 4.7.2.</li>
+  <li>Installer les extensions NuGet nécessaires : <strong>Newtonsoft.Json</strong> (déjà présent dans le projet) et <strong>Serilog</strong>.</li>
+  <li>Télécharger et dézipper le code du projet, puis renommer le dossier en <code>mediatekdocuments</code>.</li>
+  <li>Récupérer, installer et configurer l'API REST (voir le dépôt API correspondant et son readme).</li>
+  <li>Vérifier la configuration dans le fichier <code>App.config</code> du projet :
+    <ul>
+      <li><code>uriApi</code> : adresse de l'API (par défaut <code>http://localhost/rest_mediatekdocuments/</code>)</li>
+      <li><code>authenticationString</code> : identifiants de l'API au format <code>login:password</code> (par défaut <code>admin:adminpwd</code>)</li>
+    </ul>
+  </li>
+  <li>Ouvrir la solution <code>MediaTekDocuments.sln</code> dans Visual Studio, compiler et lancer.</li>
+  <li>Se connecter avec un login/mot de passe existant en base (voir la table <em>utilisateur</em> de la BDD).</li>
+</ul>
