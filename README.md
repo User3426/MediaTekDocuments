@@ -5,7 +5,7 @@ Ce dépôt est une extension du dépôt d'origine disponible ici :<br>
 Le readme de ce dépôt présente l'application d'origine, son architecture et les fonctionnalités de base déjà implémentées.<br>
 <br>
 L'API REST nécessaire au fonctionnement de cette application est disponible ici :<br>
-<a href="https://github.com/CNED-SLAM/rest_mediatekdocuments">https://github.com/CNED-SLAM/rest_mediatekdocuments</a><br>
+<a href="https://github.com/User3426/rest_mediatekdocuments">https://github.com/User3426/rest_mediatekdocuments</a><br>
 
 <h1>Présentation des fonctionnalités ajoutées</h1>
 
